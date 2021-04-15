@@ -1,4 +1,4 @@
-package org.example.model;
+package org.example.domain;
 
 import java.time.LocalDate;
 
@@ -14,5 +14,4 @@ public class Job {
     private LocalDate approximatedDeadline;
     private String issuedByUser;
     private String AssignedTo;
-
 }

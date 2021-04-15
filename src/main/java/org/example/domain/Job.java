@@ -12,6 +12,20 @@ public class Job {
     private int price;
     private LocalDate issuedAt;
     private LocalDate approximatedDeadline;
-    private String issuedByUser;
-    private String AssignedTo;
+    private User issuedByUser;
+    private User AssignedTo;
+
+    public Job(int id, String textToTranslate, String translatedText, String translatedFromLanguage, String translatedToLanguage, boolean translationCompleted, int price, LocalDate issuedAt, LocalDate approximatedDeadline, User issuedByUser, User assignedTo) {
+        this.id = id;
+        TextToTranslate = textToTranslate;
+        TranslatedText = translatedText;
+        TranslatedFromLanguage = translatedFromLanguage;
+        TranslatedToLanguage = translatedToLanguage;
+        this.translationCompleted = translationCompleted;
+        this.price = price;
+        this.issuedAt = issuedAt;
+        this.approximatedDeadline = approximatedDeadline;
+        this.issuedByUser = issuedByUser;
+        AssignedTo = assignedTo;
+    }
 }

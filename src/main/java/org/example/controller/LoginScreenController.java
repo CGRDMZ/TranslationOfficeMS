@@ -1,10 +1,9 @@
-package org.example.controllers;
+package org.example.controller;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
-import javafx.scene.input.KeyEvent;
 import org.example.App;
 import org.example.config.UserConfig;
 

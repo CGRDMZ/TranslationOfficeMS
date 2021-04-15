@@ -1,4 +1,4 @@
-package org.example.controllers;
+package org.example.controller;
 
 public class CustomerScreenController {
 }

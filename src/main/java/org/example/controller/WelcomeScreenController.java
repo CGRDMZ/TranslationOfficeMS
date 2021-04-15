@@ -1,4 +1,4 @@
-package org.example.controllers;
+package org.example.controller;
 
 import java.io.IOException;
 import java.net.URL;
@@ -7,7 +7,6 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
 import org.example.App;
 import org.example.config.UserConfig;
 

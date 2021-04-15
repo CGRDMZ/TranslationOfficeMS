@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+
+<AnchorPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="org.example.controllers.LoginScreenController">
+    <children>
+        <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+              prefHeight="400.0" prefWidth="600.0">
+            <StackPane>
+                <children>
+                    <VBox prefHeight="145.0" prefWidth="499.0" spacing="10.0">
+                        <children>
+                            <GridPane alignment="TOP_CENTER" prefHeight="150.0" prefWidth="499.0">
+                                <children>
+                                    <Label fx:id="loginTitle" alignment="CENTER" maxHeight="1.7976931348623157E308"
+                                           maxWidth="1.7976931348623157E308" prefHeight="95.0" prefWidth="178.0" text=""
+                                           textAlignment="CENTER" wrapText="true" GridPane.columnIndex="0"
+                                           GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="0">
+                                        <font>
+                                            <Font name="Roboto Light" size="41.0"/>
+                                        </font>
+                                        <GridPane.margin>
+                                            <Insets bottom="50.0"/>
+                                        </GridPane.margin>
+                                    </Label>
+                                    <Label text="Username:" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+                                    <Label text="Password:" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+                                    <TextField fx:id="user" promptText="Enter your username..." GridPane.columnIndex="1"
+                                               GridPane.rowIndex="1"/>
+                                    <TextField fx:id="password" promptText="Enter your password..."
+                                               GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+                                </children>
+                                <columnConstraints>
+                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="148.0" minWidth="10.0"
+                                                       prefWidth="109.0"/>
+                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="228.0" minWidth="10.0"
+                                                       prefWidth="189.0"/>
+                                </columnConstraints>
+                                <rowConstraints>
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER"/>
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                                </rowConstraints>
+                            </GridPane>
+                            <HBox alignment="BASELINE_RIGHT">
+                                <children>
+                                    <Button mnemonicParsing="false" text="Register">
+                                        <HBox.margin>
+                                            <Insets right="10.0"/>
+                                        </HBox.margin>
+                                    </Button>
+                                    <Button fx:id="loginButton" onAction="#onLoginButtonClicked" alignment="CENTER" defaultButton="true"
+                                            mnemonicParsing="false" text="Login">
+                                        <HBox.margin>
+                                            <Insets/>
+                                        </HBox.margin>
+                                    </Button>
+                                </children>
+                                <VBox.margin>
+                                    <Insets left="60.0" right="60.0"/>
+                                </VBox.margin>
+                            </HBox>
+                        </children>
+                    </VBox>
+                </children>
+                <VBox.margin>
+                    <Insets bottom="50.0" left="50.0" right="50.0" top="50.0"/>
+                </VBox.margin>
+            </StackPane>
+        </VBox>
+    </children>
+</AnchorPane>

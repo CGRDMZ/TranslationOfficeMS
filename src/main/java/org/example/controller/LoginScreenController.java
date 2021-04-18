@@ -43,7 +43,42 @@ public class LoginScreenController implements Initializable {
 
     @FXML
     private void onRegisterButtonClicked(ActionEvent e) {
+        String username = usernameField.getText();
+        String password = passwordField.getText();
+        if (username.length() < 5) {
+            showErrorMessage("Username must be at least 5 characters.");
+            return;
+        }
+        if (password.length() < 5) {
+            showErrorMessage("Password must be at least 5 characters.");
+            return;
+        }
+        User searchUser = userModel.getUser(username);
+        if (searchUser != null) {
+            showErrorMessage("There is a user with this username already.");
+            return;
+        }
+        try {
+            if (userModel.register(username, password, UserConfig.isCustomer(), !UserConfig.isCustomer())) {
+                showInfoMessage("User is created successfully.");
+            } else {
+                showErrorMessage("Something went wrong with the creation of the new account.");
+            }
 
+        } catch (Exception exception) {
+            showErrorMessage("Something went wrong with the creation of the new account.");
+        }
+    }
+
+    private void showErrorMessage(String message) {
+        errorMessage.textProperty().setValue(message);
+        errorMessage.setStyle("-fx-background-color: #ff0000;");
+        errorMessage.visibleProperty().setValue(true);
+    }
+    private void showInfoMessage(String message) {
+        errorMessage.textProperty().setValue(message);
+        errorMessage.setStyle("-fx-background-color: #00ff00;");
+        errorMessage.visibleProperty().setValue(true);
     }
 
 

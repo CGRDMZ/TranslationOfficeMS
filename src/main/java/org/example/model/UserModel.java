@@ -15,7 +15,7 @@ public class UserModel {
     private Connection dbConnection;
     private User loggedInUser;
 
-    public UserModel() {
+    private UserModel() {
         this.dbConnection = DBConnection.connectDB();
     }
 
@@ -26,7 +26,13 @@ public class UserModel {
         return SINGLETON;
     }
 
-    public boolean register(User newUser) throws Exception {
+    public boolean register(String username, String password, boolean isCustomer, boolean isTranslator) throws Exception {
+        User newUser = new User()
+                .setUsername(username)
+                .setPassword(password)
+                .setCustomer(isCustomer)
+                .setTranslator(isTranslator);
+
         if (newUser == null) return false;
         if (newUser.getUsername() == null) throw new Exception("Can not insert a new user without a username");
         if (newUser.getPassword() == null) throw new Exception("Can not insert a new user without a password");
@@ -38,7 +44,11 @@ public class UserModel {
         statement.setString(2, newUser.getPassword());
         statement.setBoolean(3, newUser.isCustomer());
         statement.setBoolean(4, newUser.isTranslator());
-        return statement.execute();
+        try {
+            return statement.execute();
+        } catch (SQLException e) {
+            return false;
+        }
     }
 
     public User getUser(String username) {

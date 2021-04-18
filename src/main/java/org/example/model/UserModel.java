@@ -9,11 +9,21 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class UserModel {
+
+    private static UserModel SINGLETON;
+
     private Connection dbConnection;
     private User loggedInUser;
 
     public UserModel() {
         this.dbConnection = DBConnection.connectDB();
+    }
+
+    public static UserModel getInstance() {
+        if (SINGLETON == null) {
+            SINGLETON = new UserModel();
+        }
+        return SINGLETON;
     }
 
     public boolean register(User newUser) throws Exception {
@@ -38,21 +48,19 @@ public class UserModel {
             statement = dbConnection.prepareStatement(sql);
             statement.setString(1, username);
             ResultSet result = statement.executeQuery();
-            System.out.println("next statement " + result.next());
             return User.ResultSetToUser(result);
         } catch (SQLException sqlException) {
-            sqlException.printStackTrace();
             return null;
         }
     }
 
-    public boolean login(String username, String password) {
+    public User login(String username, String password) {
         if (loggedInUser != null) logout();
         User user = getUser(username);
         System.out.println(user);
-        if (user == null) return false;
+        if (user == null) return null;
         loggedInUser = user;
-        return user.getPassword().equals(password);
+        return user.getPassword().equals(password) ? user : null;
     }
 
     public void logout() {

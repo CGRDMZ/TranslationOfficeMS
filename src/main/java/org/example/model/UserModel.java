@@ -12,7 +12,7 @@ public class UserModel {
 
     private static UserModel SINGLETON;
 
-    private Connection dbConnection;
+    private final Connection dbConnection;
     private User loggedInUser;
 
     private UserModel() {
@@ -26,7 +26,12 @@ public class UserModel {
         return SINGLETON;
     }
 
-    public boolean register(String username, String password, boolean isCustomer, boolean isTranslator) throws Exception {
+    public boolean register(String username, String password, boolean isCustomer, boolean isTranslator) {
+        User searchUser = getUser(username);
+        if (searchUser != null) {
+            return false;
+        }
+
         User newUser = new User()
                 .setUsername(username)
                 .setPassword(password)
@@ -34,18 +39,19 @@ public class UserModel {
                 .setTranslator(isTranslator);
 
         if (newUser == null) return false;
-        if (newUser.getUsername() == null) throw new Exception("Can not insert a new user without a username");
-        if (newUser.getPassword() == null) throw new Exception("Can not insert a new user without a password");
+        if (newUser.getUsername() == null) return false;
+        if (newUser.getPassword() == null) return false;
 
         String sql = "insert into Users (username, password, isCustomer, isTranslator) values (?,?,?,?)";
 
-        PreparedStatement statement = dbConnection.prepareStatement(sql);
-        statement.setString(1, newUser.getUsername());
-        statement.setString(2, newUser.getPassword());
-        statement.setBoolean(3, newUser.isCustomer());
-        statement.setBoolean(4, newUser.isTranslator());
         try {
-            return statement.execute();
+            PreparedStatement statement = dbConnection.prepareStatement(sql);
+            statement.setString(1, newUser.getUsername());
+            statement.setString(2, newUser.getPassword());
+            statement.setBoolean(3, newUser.isCustomer());
+            statement.setBoolean(4, newUser.isTranslator());
+            System.out.println(statement.execute());
+            return true;
         } catch (SQLException e) {
             return false;
         }

@@ -1,36 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@stylesheets/main_styles.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.controller.CustomerScreenController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="800.0" stylesheets="@stylesheets/main_styles.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.controller.CustomerScreenController">
    <children>
-      <BorderPane prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <BorderPane prefHeight="200.0" prefWidth="200.0" styleClass="customer_wrapper" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <left>
-            <VBox prefHeight="400.0" prefWidth="183.0" style="-fx-background-color: #c3edff;" BorderPane.alignment="CENTER">
+            <VBox maxHeight="1.7976931348623157E308" prefHeight="400.0" prefWidth="183.0">
                <children>
-                   <StackPane prefHeight="88.0" prefWidth="188.0">
+                   <StackPane prefHeight="88.0" prefWidth="188.0" styleClass="logo">
                        <children>
-                           <Rectangle arcHeight="5.0" fill="DODGERBLUE" height="88.0" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="188.0" />
                            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Translate.it">
                                <font>
-                                   <Font size="33.0" />
+                                   <Font name="Lato Regular" size="33.0" />
                                </font>
                            </Text>
                        </children>
                    </StackPane>
-                  <ScrollPane hbarPolicy="NEVER" prefHeight="239.0" prefWidth="190.0" />
-                  <GridPane alignment="CENTER">
+                  <ScrollPane fitToHeight="true" hbarPolicy="NEVER" maxHeight="1.7976931348623157E308" prefHeight="242.0" prefWidth="183.0" VBox.vgrow="ALWAYS" />
+                  <GridPane alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="job_detail">
                     <columnConstraints>
                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -40,17 +43,101 @@
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                        <Label alignment="CENTER" text="Price:" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
-                        <Label text="Estimated Date:" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
-                        <Label fx:id="selectedItemPrice" text="3.99$" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
-                        <Label fx:id="selectedItemDeadline" text="22, March, 2020" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+                        <Label alignment="CENTER" text="Price:" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                           <font>
+                              <Font name="Lato Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label text="Estimated Date:" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                           <font>
+                              <Font name="Lato Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="selectedItemPrice" text="3.99$" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                           <font>
+                              <Font name="Lato Light" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="selectedItemDeadline" text="22, March, 2020" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                           <font>
+                              <Font name="Lato Light" size="11.0" />
+                           </font>
+                        </Label>
                      </children>
                   </GridPane>
                </children>
             </VBox>
          </left>
          <center>
-            <VBox prefHeight="400.0" prefWidth="219.0" BorderPane.alignment="CENTER" />
+            <VBox minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="219.0" BorderPane.alignment="CENTER">
+               <children>
+                  <TextArea prefHeight="234.0" prefWidth="577.0" VBox.vgrow="ALWAYS">
+                     <VBox.margin>
+                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                     </VBox.margin>
+                  </TextArea>
+                  <HBox prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <HBox>
+                           <children>
+                              <GridPane prefHeight="100.0" prefWidth="270.0">
+                                <columnConstraints>
+                                  <ColumnConstraints halignment="CENTER" maxWidth="133.20001220703125" minWidth="10.0" prefWidth="112.8" />
+                                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="96.00002441406248" minWidth="10.0" prefWidth="69.59999999999998" />
+                                </columnConstraints>
+                                <rowConstraints>
+                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                  <RowConstraints maxHeight="36.4" minHeight="10.0" prefHeight="30.400012207031253" vgrow="SOMETIMES" />
+                                  <RowConstraints maxHeight="38.80001220703126" minHeight="10.0" prefHeight="26.39998779296875" vgrow="SOMETIMES" />
+                                </rowConstraints>
+                                 <children>
+                                    <Label text="Word Count:" textAlignment="CENTER" GridPane.halignment="RIGHT" GridPane.valignment="CENTER" />
+                                    <Label text="Price:" textAlignment="CENTER" GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+                                    <Label text="Estimated Deadline:" textAlignment="RIGHT" GridPane.halignment="RIGHT" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
+                                    <Label text="300" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
+                                    <Label text="300$" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                                    <Label text="22/07/00" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+                                 </children>
+                                 <HBox.margin>
+                                    <Insets bottom="20.0" />
+                                 </HBox.margin>
+                              </GridPane>
+                           </children>
+                           <HBox.margin>
+                              <Insets left="20.0" />
+                           </HBox.margin>
+                        </HBox>
+                        <HBox alignment="CENTER" HBox.hgrow="ALWAYS">
+                           <children>
+                              <TextField editable="false" prefHeight="26.0" prefWidth="230.0" />
+                              <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="130.0" text="Pick a File" textAlignment="CENTER" wrapText="true">
+                                 <HBox.margin>
+                                    <Insets left="5.0" />
+                                 </HBox.margin>
+                              </Button>
+                           </children>
+                           <HBox.margin>
+                              <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                           </HBox.margin>
+                        </HBox>
+                        <HBox alignment="CENTER">
+                           <children>
+                              <Button accessibleText="Create a new job." alignment="CENTER" contentDisplay="CENTER" defaultButton="true" mnemonicParsing="false" prefHeight="78.0" prefWidth="185.0" styleClass="create_job_btn" text="Create Job" textAlignment="CENTER" wrapText="true" HBox.hgrow="NEVER">
+                                 <padding>
+                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                 </padding>
+                                 <HBox.margin>
+                                    <Insets bottom="20.0" right="20.0" />
+                                 </HBox.margin>
+                                 <font>
+                                    <Font name="Lato Bold" size="16.0" />
+                                 </font>
+                              </Button>
+                           </children>
+                        </HBox>
+                     </children>
+                  </HBox>
+               </children></VBox>
          </center>
       </BorderPane>
    </children>

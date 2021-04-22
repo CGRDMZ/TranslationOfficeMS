@@ -1,3 +1,7 @@
+Text {
+    -fx-font-family: 'Lato';
+}
+
 .login_background {
     -fx-background-color: "#617680";
 }
@@ -10,4 +14,22 @@
 .register_button {
     -fx-background-color: "#C3EDFF";
     -fx-text-fill: "#ffffff";
+}
+
+.logo {
+    -fx-background-color: "#75BAFF";
+}
+
+.customer_wrapper {
+    -fx-background-color: "#617080";
+}
+
+.job_detail {
+    -fx-background-color: "#75BAFF";
+}
+
+.create_job_btn {
+    -fx-background-color: "#9BB4CC";
+    -fx-text-fill: "#ffffff";
+    -fx-background-radius: 5px;
 }

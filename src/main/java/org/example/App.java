@@ -29,6 +29,9 @@ public class App extends Application {
     }
 
     private static Parent loadFXML(String fxml) throws IOException {
+        // for antialiasing the texts
+        System.setProperty("prism.lcdtext", "false");
+
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml + ".fxml"));
         return fxmlLoader.load();
     }

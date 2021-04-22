@@ -3,6 +3,8 @@ package org.example.controller;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import org.example.App;
@@ -13,6 +15,8 @@ import org.example.model.UserModel;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import static javafx.scene.control.Alert.*;
 
 public class LoginScreenController implements Initializable {
     @FXML
@@ -30,8 +34,7 @@ public class LoginScreenController implements Initializable {
     private void onLoginButtonClicked(ActionEvent e) throws IOException {
         User loginUser = userModel.login(usernameField.getText(), passwordField.getText());
         if (loginUser == null) {
-            errorMessage.textProperty().setValue("Wrong username or password.");
-            errorMessage.visibleProperty().setValue(true);
+            showErrorMessage("Username or password is incorrect.");
             return;
         };
         if (UserConfig.isCustomer() && loginUser.isCustomer()) {
@@ -53,32 +56,27 @@ public class LoginScreenController implements Initializable {
             showErrorMessage("Password must be at least 5 characters.");
             return;
         }
-        User searchUser = userModel.getUser(username);
-        if (searchUser != null) {
-            showErrorMessage("There is a user with this username already.");
-            return;
-        }
-        try {
-            if (userModel.register(username, password, UserConfig.isCustomer(), !UserConfig.isCustomer())) {
-                showInfoMessage("User is created successfully.");
-            } else {
-                showErrorMessage("Something went wrong with the creation of the new account.");
-            }
 
-        } catch (Exception exception) {
+        if (userModel.register(username, password, UserConfig.isCustomer(), !UserConfig.isCustomer())) {
+            showInfoMessage("User is created successfully.");
+        } else {
             showErrorMessage("Something went wrong with the creation of the new account.");
         }
     }
 
     private void showErrorMessage(String message) {
-        errorMessage.textProperty().setValue(message);
-        errorMessage.setStyle("-fx-background-color: #ff0000;");
-        errorMessage.visibleProperty().setValue(true);
+//        errorMessage.textProperty().setValue(message);
+//        errorMessage.setStyle("-fx-background-color: #ff0000;");
+//        errorMessage.visibleProperty().setValue(true);
+        Alert alert = new Alert(AlertType.ERROR, message, ButtonType.OK);
+        alert.show();
     }
     private void showInfoMessage(String message) {
-        errorMessage.textProperty().setValue(message);
-        errorMessage.setStyle("-fx-background-color: #00ff00;");
-        errorMessage.visibleProperty().setValue(true);
+//        errorMessage.textProperty().setValue(message);
+//        errorMessage.setStyle("-fx-background-color: #00ff00;");
+//        errorMessage.visibleProperty().setValue(true);
+        Alert alert = new Alert(AlertType.INFORMATION, message, ButtonType.OK);
+        alert.show();
     }
 
 

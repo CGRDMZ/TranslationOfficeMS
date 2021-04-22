@@ -1,0 +1,13 @@
+.login_background {
+    -fx-background-color: "#617680";
+}
+
+.login_button {
+    -fx-background-color: "#75D6FF";
+    -fx-text-fill: "#ffffff";
+}
+
+.register_button {
+    -fx-background-color: "#C3EDFF";
+    -fx-text-fill: "#ffffff";
+}

@@ -1,35 +1,59 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.controller.LoginScreenController">
+<AnchorPane styleClass="login_background" stylesheets="@stylesheets/main_styles.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.controller.LoginScreenController">
     <children>
         <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0">
             <StackPane>
                 <children>
-                    <VBox prefHeight="145.0" prefWidth="499.0" spacing="10.0">
+                    <VBox alignment="CENTER" prefHeight="145.0" prefWidth="499.0" spacing="10.0">
                         <children>
-                            <GridPane alignment="TOP_CENTER" prefHeight="150.0" prefWidth="499.0">
+                            <GridPane alignment="CENTER" maxWidth="-Infinity" prefHeight="110.0" prefWidth="285.0">
                                 <children>
-                                    <Label fx:id="loginTitle" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="95.0" prefWidth="178.0" text="" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="0">
+                                    <Label fx:id="loginTitle" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="116.0" prefWidth="286.0" text="\${type} Login" textAlignment="CENTER" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="0">
                                         <font>
-                                            <Font name="Roboto Light" size="41.0" />
+                                            <Font name="Lato Bold" size="26.0" />
                                         </font>
                                         <GridPane.margin>
                                             <Insets bottom="50.0" />
                                         </GridPane.margin>
                                     </Label>
-                                    <Label text="Username:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
-                                    <Label text="Password:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
-                                    <TextField fx:id="usernameField" promptText="Enter your username..." GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                    <PasswordField fx:id="passwordField" promptText="Enter your password..." GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                    <Label alignment="CENTER_RIGHT" contentDisplay="CENTER" text="Username:" GridPane.columnIndex="0" GridPane.rowIndex="1">
+                              <GridPane.margin>
+                                 <Insets right="10.0" />
+                              </GridPane.margin>
+                              <font>
+                                 <Font name="Lato Regular" size="12.0" />
+                              </font></Label>
+                                    <Label text="Password:" GridPane.columnIndex="0" GridPane.rowIndex="2">
+                              <GridPane.margin>
+                                 <Insets right="10.0" />
+                              </GridPane.margin>
+                              <font>
+                                 <Font name="Lato Regular" size="12.0" />
+                              </font></Label>
+                                    <TextField fx:id="usernameField" maxWidth="-Infinity" prefHeight="26.0" prefWidth="200.0" promptText="Enter your username..." GridPane.columnIndex="1" GridPane.rowIndex="1">
+                              <GridPane.margin>
+                                 <Insets />
+                              </GridPane.margin></TextField>
+                                    <PasswordField fx:id="passwordField" maxWidth="-Infinity" prefHeight="26.0" prefWidth="200.0" promptText="Enter your password..." GridPane.columnIndex="1" GridPane.rowIndex="2" />
                                 </children>
                                 <columnConstraints>
-                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="148.0" minWidth="10.0" prefWidth="109.0" />
-                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="228.0" minWidth="10.0" prefWidth="189.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="252.00000000000003" minWidth="10.0" prefWidth="86.39998016357421" />
+                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="420.79997100830076" minWidth="10.0" prefWidth="200.00001983642576" />
                                 </columnConstraints>
                                 <rowConstraints>
                                     <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" />
@@ -37,22 +61,34 @@
                                     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                 </rowConstraints>
                             </GridPane>
-                            <HBox alignment="BASELINE_RIGHT">
+                            <HBox alignment="BASELINE_RIGHT" maxWidth="-Infinity" prefHeight="26.0" prefWidth="282.0">
                                 <children>
                            <Label fx:id="errorMessage" alignment="CENTER" contentDisplay="CENTER" disable="true" prefHeight="18.0" prefWidth="236.0" style="-fx-background-color: #ff0000; -fx-background-radius: 15;" text="Error Message" textAlignment="CENTER" textFill="WHITE" visible="false">
                               <HBox.margin>
                                  <Insets right="10.0" />
                               </HBox.margin>
                            </Label>
-                                    <Button mnemonicParsing="false" onAction="#onRegisterButtonClicked" text="Register">
+                                    <Button mnemonicParsing="false" onAction="#onRegisterButtonClicked" prefHeight="26.0" prefWidth="180.0" styleClass="register_button" text="Register">
                                         <HBox.margin>
                                             <Insets right="10.0" />
                                         </HBox.margin>
+                              <font>
+                                 <Font name="Lato Regular" size="14.0" />
+                              </font>
+                              <padding>
+                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                              </padding>
                                     </Button>
-                                    <Button fx:id="loginButton" alignment="CENTER" defaultButton="true" mnemonicParsing="false" onAction="#onLoginButtonClicked" text="Login">
+                                    <Button fx:id="loginButton" alignment="CENTER" defaultButton="true" mnemonicParsing="false" onAction="#onLoginButtonClicked" prefHeight="26.0" prefWidth="178.0" styleClass="login_button" text="Login" wrapText="true">
                                         <HBox.margin>
                                             <Insets />
                                         </HBox.margin>
+                              <font>
+                                 <Font name="Lato Regular" size="14.0" />
+                              </font>
+                              <padding>
+                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                              </padding>
                                     </Button>
                                 </children>
                                 <VBox.margin>

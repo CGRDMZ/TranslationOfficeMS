@@ -75,7 +75,6 @@ public class User {
                     .setCustomer(rs.getBoolean("isCustomer"))
                     .setTranslator(rs.getBoolean("isTranslator"));
         } catch (SQLException sqlException) {
-            sqlException.printStackTrace();
             return null;
         }
     }

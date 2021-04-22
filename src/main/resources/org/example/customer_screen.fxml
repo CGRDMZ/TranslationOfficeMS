@@ -13,9 +13,9 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.controller.CustomerScreenController">
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@stylesheets/main_styles.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.controller.CustomerScreenController">
    <children>
-      <BorderPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: 272932;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <BorderPane prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <left>
             <VBox prefHeight="400.0" prefWidth="183.0" style="-fx-background-color: #c3edff;" BorderPane.alignment="CENTER">
                <children>
@@ -42,16 +42,16 @@
                      <children>
                         <Label alignment="CENTER" text="Price:" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
                         <Label text="Estimated Date:" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
-                        <Label text="3.99$" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
-                        <Label text="22, March, 2020" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+                        <Label fx:id="selectedItemPrice" text="3.99$" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                        <Label fx:id="selectedItemDeadline" text="22, March, 2020" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
                      </children>
                   </GridPane>
                </children>
             </VBox>
          </left>
-         <right>
-            <VBox prefHeight="400.0" prefWidth="219.0" style="-fx-background-color: #c3edff;" BorderPane.alignment="CENTER" />
-         </right>
+         <center>
+            <VBox prefHeight="400.0" prefWidth="219.0" BorderPane.alignment="CENTER" />
+         </center>
       </BorderPane>
    </children>
 </AnchorPane>

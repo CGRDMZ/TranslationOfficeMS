@@ -8,10 +8,10 @@ import org.example.model.UserModel;
 
 public class UserModelView {
     private static UserModelView SINGLETON;
-    private SimpleStringProperty username;
-    private SimpleStringProperty password;
-    private SimpleObjectProperty<User> user;
-    private SimpleBooleanProperty isTranslator;
+    private final SimpleStringProperty username;
+    private final SimpleStringProperty password;
+    private final SimpleObjectProperty<User> user;
+    private final SimpleBooleanProperty isTranslator;
 
     UserModel userModel;
 
@@ -38,10 +38,13 @@ public class UserModelView {
         User user = userModel.login(username.get(), password.get());
         if (user != null) {
             this.user.setValue(user);
-
             return true;
         }
         return false;
+    }
+
+    public void logout() {
+        user.setValue(null);
     }
 
     public String getUsername() {
@@ -52,7 +55,7 @@ public class UserModelView {
         return username;
     }
 
-    public boolean isIsTranslator() {
+    public boolean isTranslator() {
         return isTranslator.get();
     }
 

@@ -8,10 +8,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.List;
 
 public class UserModel {
-    private static UserModel SINGLETON;
+
 
     private final Connection dbConnection;
     private User loggedInUser;
@@ -20,12 +21,6 @@ public class UserModel {
         this.dbConnection = DBConnection.connectDB();
     }
 
-    public static UserModel getInstance() {
-        if (SINGLETON == null) {
-            SINGLETON = new UserModel();
-        }
-        return SINGLETON;
-    }
 
     public boolean register(String username, String password, boolean isCustomer, boolean isTranslator) {
         User searchUser = getUser(username);
@@ -65,31 +60,53 @@ public class UserModel {
             statement = dbConnection.prepareStatement(sql);
             statement.setString(1, username);
             ResultSet result = statement.executeQuery();
-            return User.ResultSetToUser(result);
+            User user = User.ResultSetToUser(result);
+            return user.setJobs(getCustomerJobs(user));
+
         } catch (SQLException sqlException) {
             System.out.println("Error: problem while creating user.");
             return null;
         }
     }
 
-    public List<Job> getCustomerJobs(String username) {
+    public List<Job> getCustomerJobs(User user) {
         String sql = "select * from Jobs where owner = ?";
         PreparedStatement statement;
 
         try {
             statement = dbConnection.prepareStatement(sql);
-            statement.setString(1, username);
+            statement.setInt(1, user.getId());
 
             ResultSet rs = statement.executeQuery();
+            return Job.ResultSetToJobList(rs);
 
         } catch (SQLException e) {
             System.out.println("Error: getting the jobs failed.");
+            return null;
         }
-        return null;
     }
 
-    public void addUserJob(Job job) {
+    public Job addUserJob(User user, Job job) {
+        String sql = "insert into Jobs (textToTranslate, price," +
+                "owner, issuedAt) values (?, ?, ?, ?, ?)";
+        PreparedStatement statement;
 
+        try {
+            statement = dbConnection.prepareStatement(sql);
+            statement.setString(1, job.getTextToTranslate());
+            statement.setInt(2, job.getPrice());
+            statement.setInt(3, job.getIssuedByUser());
+            statement.setString(4, LocalDate.now().toString());
+
+            int i = statement.executeUpdate();
+            if (i != 1) {
+                System.out.println("Error: Job failed to insert.");
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Error: inserting a new job failed.");
+            return null;
+        }
     }
 
     public User login(String username, String password) {

@@ -2,7 +2,6 @@ package org.example.entity;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,8 +13,8 @@ public class Job {
     private String translatedToLanguage;
     private boolean translationCompleted;
     private int price;
-    private LocalDate issuedAt;
-    private LocalDate approximatedDeadline;
+    private String issuedAt;
+    private String approximatedDeadline;
     private int issuedByUser;
     private int assignedTo;
 
@@ -29,11 +28,11 @@ public class Job {
                     .setTextToTranslate(rs.getString("textToTranslate"))
                     .setAssignedTo(rs.getInt("assignedTo"))
                     .setIssuedByUser(rs.getInt("owner"))
-                    .setIssuedAt(LocalDate.parse(rs.getString("issuedAt")));
-
+                    .setIssuedAt(rs.getString("issuedAt"));
+            System.out.println(job + "yep");
             jobList.add(job);
         }
-        return null;
+        return jobList;
     }
 
     public int getId() {
@@ -99,20 +98,20 @@ public class Job {
         return this;
     }
 
-    public LocalDate getIssuedAt() {
+    public String getIssuedAt() {
         return issuedAt;
     }
 
-    public Job setIssuedAt(LocalDate issuedAt) {
+    public Job setIssuedAt(String issuedAt) {
         this.issuedAt = issuedAt;
         return this;
     }
 
-    public LocalDate getApproximatedDeadline() {
+    public String getApproximatedDeadline() {
         return approximatedDeadline;
     }
 
-    public Job setApproximatedDeadline(LocalDate approximatedDeadline) {
+    public Job setApproximatedDeadline(String approximatedDeadline) {
         this.approximatedDeadline = approximatedDeadline;
         return this;
     }
@@ -139,8 +138,8 @@ public class Job {
     public String toString() {
         return "Job{" +
                 "id=" + id +
-                ", textToTranslate='" + textToTranslate + '\'' +
-                ", translatedText='" + translatedText + '\'' +
+                ", textToTranslate='" + textToTranslate.substring(0, 12) + '\'' +
+                ", translatedText='" + (translatedText == null ? null : translatedText.substring(0, 12)) + '\'' +
                 ", translatedFromLanguage='" + translatedFromLanguage + '\'' +
                 ", translatedToLanguage='" + translatedToLanguage + '\'' +
                 ", translationCompleted=" + translationCompleted +

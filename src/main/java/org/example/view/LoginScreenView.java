@@ -11,6 +11,7 @@ import org.example.App;
 import org.example.config.UserConfig;
 import org.example.entity.User;
 import org.example.model.UserModel;
+import org.example.viewmodel.UserModelView;
 
 import java.io.IOException;
 import java.net.URL;
@@ -28,11 +29,11 @@ public class LoginScreenView implements Initializable {
     @FXML
     private Label errorMessage;
 
-    private UserModel userModel;
+    private UserModelView userModelView;
 
     @FXML
     private void onLoginButtonClicked(ActionEvent e) throws IOException {
-        User loginUser = userModel.login(usernameField.getText(), passwordField.getText());
+        User loginUser = userModelView.login(usernameField.getText(), passwordField.getText());
         if (loginUser == null) {
             showErrorMessage("Username or password is incorrect.");
             return;
@@ -57,7 +58,7 @@ public class LoginScreenView implements Initializable {
             return;
         }
 
-        if (userModel.register(username, password, UserConfig.isCustomer(), !UserConfig.isCustomer())) {
+        if (userModelView.register(username, password, UserConfig.isCustomer(), !UserConfig.isCustomer())) {
             showInfoMessage("User is created successfully.");
         } else {
             showErrorMessage("Something went wrong with the creation of the new account.");

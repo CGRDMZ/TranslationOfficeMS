@@ -1,4 +1,4 @@
-package org.example.controller;
+package org.example.view;
 
 import java.io.IOException;
 import java.net.URL;
@@ -10,11 +10,7 @@ import javafx.fxml.Initializable;
 import org.example.App;
 import org.example.config.UserConfig;
 
-public class WelcomeScreenController implements Initializable {
-    
-
-
-
+public class WelcomeScreenView implements Initializable {
     @FXML
     private void onCustomerClick(ActionEvent event) throws IOException {
         UserConfig.setCustomer();

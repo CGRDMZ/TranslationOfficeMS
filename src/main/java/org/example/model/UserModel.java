@@ -1,7 +1,7 @@
 package org.example.model;
 
 import org.example.config.DBConnection;
-import org.example.domain.User;
+import org.example.entity.User;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -9,7 +9,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class UserModel {
-
     private static UserModel SINGLETON;
 
     private final Connection dbConnection;

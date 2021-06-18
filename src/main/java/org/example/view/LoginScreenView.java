@@ -1,5 +1,7 @@
 package org.example.view;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -11,6 +13,7 @@ import org.example.App;
 import org.example.config.UserConfig;
 import org.example.entity.User;
 import org.example.model.UserModel;
+import org.example.viewmodel.UserModelView;
 
 import java.io.IOException;
 import java.net.URL;
@@ -28,20 +31,22 @@ public class LoginScreenView implements Initializable {
     @FXML
     private Label errorMessage;
 
-    private UserModel userModel;
+    private UserModelView userModelView;
 
     @FXML
     private void onLoginButtonClicked(ActionEvent e) throws IOException {
-        User loginUser = userModel.login(usernameField.getText(), passwordField.getText());
-        if (loginUser == null) {
-            showErrorMessage("Username or password is incorrect.");
-            return;
-        };
-        if (UserConfig.isCustomer() && loginUser.isCustomer()) {
+        if (userModelView.login()) {
+            showInfoMessage("login succesfull.");
             App.setRoot("customer_screen");
-        } else if (!UserConfig.isCustomer() && loginUser.isTranslator()){
-            System.out.println("navigating to translator screen...");
+        } else {
+            showErrorMessage("login failed.");
         }
+    }
+
+    private void setBindings() {
+        userModelView.usernameProperty().bind(usernameField.textProperty());
+        userModelView.passwordProperty().bind(passwordField.textProperty());
+        loginTitle.textProperty().setValue(userModelView.isIsTranslator() ? "Translator Login" : "Customer Login");
     }
 
     @FXML
@@ -57,7 +62,7 @@ public class LoginScreenView implements Initializable {
             return;
         }
 
-        if (userModel.register(username, password, UserConfig.isCustomer(), !UserConfig.isCustomer())) {
+        if (userModelView.register()) {
             showInfoMessage("User is created successfully.");
         } else {
             showErrorMessage("Something went wrong with the creation of the new account.");
@@ -82,8 +87,7 @@ public class LoginScreenView implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        userModel = UserModel.getInstance();
-        loginTitle.textProperty().setValue(UserConfig.isCustomer() ? "Customer Login" : "Translator Login");
-        System.out.println(loginTitle.getText());
+        userModelView = UserModelView.getInstance();
+        setBindings();
     }
 }

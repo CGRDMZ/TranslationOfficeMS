@@ -3,6 +3,7 @@ package org.example.entity;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Arrays;
+import java.util.List;
 
 public class User {
     private int id;
@@ -10,7 +11,7 @@ public class User {
     private String password;
     private boolean isCustomer;
     private boolean isTranslator;
-    private Job[] jobs;
+    private List<Job> jobs;
 
     public int getId() {
         return id;
@@ -18,6 +19,15 @@ public class User {
 
     public User setId(int id) {
         this.id = id;
+        return this;
+    }
+
+    public List<Job> getJobs() {
+        return jobs;
+    }
+
+    public User setJobs(List<Job> jobs) {
+        this.jobs = jobs;
         return this;
     }
 
@@ -57,14 +67,6 @@ public class User {
         return this;
     }
 
-    public Job[] getJobs() {
-        return jobs;
-    }
-
-    public User setJobs(Job[] jobs) {
-        this.jobs = jobs;
-        return this;
-    }
 
     public static User ResultSetToUser(ResultSet rs) {
         try {
@@ -87,7 +89,7 @@ public class User {
                 ", password='" + password + '\'' +
                 ", isCustomer=" + isCustomer +
                 ", isTranslator=" + isTranslator +
-                ", jobs=" + Arrays.toString(jobs) +
+                ", jobs=" + jobs.toString() +
                 '}';
     }
 }

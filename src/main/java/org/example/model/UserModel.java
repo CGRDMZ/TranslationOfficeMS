@@ -15,7 +15,6 @@ public class UserModel {
 
 
     private final Connection dbConnection;
-    private User loggedInUser;
 
     public UserModel() {
         this.dbConnection = DBConnection.connectDB();
@@ -25,6 +24,7 @@ public class UserModel {
     public boolean register(String username, String password, boolean isCustomer, boolean isTranslator) {
         User searchUser = getUser(username);
         if (searchUser != null) {
+            System.out.println("there is a user with this name already.");
             return false;
         }
 
@@ -37,6 +37,8 @@ public class UserModel {
         if (newUser == null) return false;
         if (newUser.getUsername() == null) return false;
         if (newUser.getPassword() == null) return false;
+        if (newUser.getPassword().length() < 5) return false;
+        if (newUser.getUsername().length() < 5) return false;
 
         String sql = "insert into Users (username, password, isCustomer, isTranslator) values (?,?,?,?)";
 
@@ -46,7 +48,7 @@ public class UserModel {
             statement.setString(2, newUser.getPassword());
             statement.setBoolean(3, newUser.isCustomer());
             statement.setBoolean(4, newUser.isTranslator());
-            System.out.println(statement.execute());
+            System.out.println(statement.executeUpdate());
             return true;
         } catch (SQLException e) {
             return false;
@@ -61,7 +63,7 @@ public class UserModel {
             statement.setString(1, username);
             ResultSet result = statement.executeQuery();
             User user = User.ResultSetToUser(result);
-            assert user != null;
+            if (user == null) return null;
             return user.setJobs(getCustomerJobs(user));
 
         } catch (SQLException sqlException) {
@@ -71,6 +73,7 @@ public class UserModel {
     }
 
     public List<Job> getCustomerJobs(User user) {
+        if (user == null) return null;
         String sql = "select * from Jobs where owner = ?";
         PreparedStatement statement;
 
@@ -113,16 +116,11 @@ public class UserModel {
     }
 
     public User login(String username, String password) {
-        if (loggedInUser != null) logout();
         User user = getUser(username);
         System.out.println(user);
         if (user == null) return null;
-        loggedInUser = user;
         return user.getPassword().equals(password) ? user : null;
     }
 
-    public void logout() {
-        loggedInUser = null;
-    }
 
 }

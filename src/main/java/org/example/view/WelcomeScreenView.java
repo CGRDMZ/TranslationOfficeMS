@@ -8,7 +8,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import org.example.App;
-import org.example.config.UserConfig;
 import org.example.viewmodel.UserModelView;
 
 public class WelcomeScreenView implements Initializable {

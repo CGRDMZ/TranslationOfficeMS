@@ -1,12 +1,14 @@
 package org.example.model;
 
 import org.example.config.DBConnection;
+import org.example.entity.Job;
 import org.example.entity.User;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 public class UserModel {
     private static UserModel SINGLETON;
@@ -65,8 +67,29 @@ public class UserModel {
             ResultSet result = statement.executeQuery();
             return User.ResultSetToUser(result);
         } catch (SQLException sqlException) {
+            System.out.println("Error: problem while creating user.");
             return null;
         }
+    }
+
+    public List<Job> getCustomerJobs(String username) {
+        String sql = "select * from Jobs where owner = ?";
+        PreparedStatement statement;
+
+        try {
+            statement = dbConnection.prepareStatement(sql);
+            statement.setString(1, username);
+
+            ResultSet rs = statement.executeQuery();
+
+        } catch (SQLException e) {
+            System.out.println("Error: getting the jobs failed.");
+        }
+        return null;
+    }
+
+    public void addUserJob(Job job) {
+
     }
 
     public User login(String username, String password) {

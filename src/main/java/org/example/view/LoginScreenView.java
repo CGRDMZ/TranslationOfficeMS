@@ -1,4 +1,4 @@
-package org.example.controller;
+package org.example.view;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -9,7 +9,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import org.example.App;
 import org.example.config.UserConfig;
-import org.example.domain.User;
+import org.example.entity.User;
 import org.example.model.UserModel;
 
 import java.io.IOException;
@@ -18,7 +18,7 @@ import java.util.ResourceBundle;
 
 import static javafx.scene.control.Alert.*;
 
-public class LoginScreenController implements Initializable {
+public class LoginScreenView implements Initializable {
     @FXML
     private TextField usernameField;
     @FXML

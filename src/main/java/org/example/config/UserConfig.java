@@ -13,12 +13,7 @@ public class UserConfig {
     public static UserType setTranslator() {
         return userType = UserType.TRANSLATOR;
     }
-
     public static boolean isCustomer() {
         return userType == UserType.CUSTOMER;
     }
 }
-
-
-
-

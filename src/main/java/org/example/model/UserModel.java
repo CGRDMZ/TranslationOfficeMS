@@ -17,7 +17,7 @@ public class UserModel {
     private final Connection dbConnection;
     private User loggedInUser;
 
-    private UserModel() {
+    public UserModel() {
         this.dbConnection = DBConnection.connectDB();
     }
 
@@ -61,6 +61,7 @@ public class UserModel {
             statement.setString(1, username);
             ResultSet result = statement.executeQuery();
             User user = User.ResultSetToUser(result);
+            assert user != null;
             return user.setJobs(getCustomerJobs(user));
 
         } catch (SQLException sqlException) {
@@ -101,12 +102,14 @@ public class UserModel {
             int i = statement.executeUpdate();
             if (i != 1) {
                 System.out.println("Error: Job failed to insert.");
+                return null;
             }
 
         } catch (SQLException e) {
             System.out.println("Error: inserting a new job failed.");
             return null;
         }
+        return null;
     }
 
     public User login(String username, String password) {

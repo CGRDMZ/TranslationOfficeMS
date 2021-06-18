@@ -9,25 +9,24 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import org.example.App;
 import org.example.config.UserConfig;
+import org.example.viewmodel.UserModelView;
 
 public class WelcomeScreenView implements Initializable {
+    UserModelView userModelView;
+
     @FXML
     private void onCustomerClick(ActionEvent event) throws IOException {
-        UserConfig.setCustomer();
         App.setRoot("login_screen");
+        userModelView.isTranslatorProperty().setValue(false);
     }
     @FXML
     private void onTranslatorClick(ActionEvent event) throws IOException {
-        UserConfig.setTranslator();
+        userModelView.isTranslatorProperty().setValue(true);
         App.setRoot("login_screen");
-    }
-
-    private String getUserType() {
-        return UserConfig.isCustomer() ? "Customer" : "Translator";
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
+        userModelView = UserModelView.getInstance();
     }
 }

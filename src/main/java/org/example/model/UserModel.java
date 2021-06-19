@@ -1,5 +1,8 @@
 package org.example.model;
 
+import com.j256.ormlite.dao.Dao;
+import com.j256.ormlite.dao.DaoManager;
+import com.j256.ormlite.support.ConnectionSource;
 import org.example.config.DBConnection;
 import org.example.entity.Job;
 import org.example.entity.User;
@@ -16,9 +19,21 @@ public class UserModel {
 
 
     private final Connection dbConnection;
+    private final ConnectionSource connectionSource;
+    private Dao<User,Integer> userDao;
+    private Dao<Job,Integer> jobDao;
 
     public UserModel() {
         this.dbConnection = DBConnection.connectDB();
+        this.connectionSource = DBConnection.getConnectionSource();
+        try {
+            userDao = DaoManager.createDao(connectionSource, User.class);
+            jobDao = DaoManager.createDao(connectionSource, Job.class);
+        } catch (SQLException sqlException) {
+            System.out.println("Error: while creating dao.");
+            sqlException.printStackTrace();
+        }
+
     }
 
 
@@ -65,30 +80,32 @@ public class UserModel {
             ResultSet result = statement.executeQuery();
             User user = User.ResultSetToUser(result);
             if (user == null) return null;
-            return user.setJobs(getCustomerJobs(user));
+            return user;
 
         } catch (SQLException sqlException) {
             System.out.println("Error: problem while creating user.");
             return null;
         }
+
     }
 
     public List<Job> getCustomerJobs(User user) {
-        if (user == null) return null;
-        String sql = "select * from Jobs where owner = ?";
-        PreparedStatement statement;
-
-        try {
-            statement = dbConnection.prepareStatement(sql);
-            statement.setInt(1, user.getId());
-
-            ResultSet rs = statement.executeQuery();
-            return Job.ResultSetToJobList(rs);
-
-        } catch (SQLException e) {
-            System.out.println("Error: getting the jobs failed.");
-            return null;
-        }
+//        if (user == null) return null;
+//        String sql = "select * from Jobs where owner = ?";
+//        PreparedStatement statement;
+//
+//        try {
+//            statement = dbConnection.prepareStatement(sql);
+//            statement.setInt(1, user.getId());
+//
+//            ResultSet rs = statement.executeQuery();
+//            return Job.ResultSetToJobList(rs);
+//
+//        } catch (SQLException e) {
+//            System.out.println("Error: getting the jobs failed.");
+//            return null;
+//        }
+        return null;
     }
 
     public Job addUserJob(User user, String textToTranslate, int price, int owner) {

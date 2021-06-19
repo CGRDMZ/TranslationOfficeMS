@@ -1,17 +1,27 @@
 package org.example.entity;
 
+import com.j256.ormlite.dao.ForeignCollection;
+import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.field.ForeignCollectionField;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.List;
 
 public class User {
+    @DatabaseField(generatedId = true)
     private int id;
+    @DatabaseField()
     private String username;
+    @DatabaseField()
     private String password;
+    @DatabaseField()
     private boolean isCustomer;
+    @DatabaseField()
     private boolean isTranslator;
-    private List<Job> jobs;
+    @ForeignCollectionField()
+    private ForeignCollection<Job> jobs;
 
     public static User ResultSetToUser(ResultSet rs) {
         try {
@@ -35,13 +45,12 @@ public class User {
         return this;
     }
 
-    public List<Job> getJobs() {
+    public ForeignCollection<Job> getJobs() {
         return jobs;
     }
 
-    public User setJobs(List<Job> jobs) {
+    public void setJobs(ForeignCollection<Job> jobs) {
         this.jobs = jobs;
-        return this;
     }
 
     public String getUsername() {

@@ -8,7 +8,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import org.example.App;
-import org.example.Utils;
+import org.example.utils.Utils;
 import org.example.viewmodel.UserModelView;
 
 import java.io.IOException;

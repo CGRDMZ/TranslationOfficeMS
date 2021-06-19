@@ -13,6 +13,19 @@ public class User {
     private boolean isTranslator;
     private List<Job> jobs;
 
+    public static User ResultSetToUser(ResultSet rs) {
+        try {
+            return new User()
+                    .setId(rs.getInt("id"))
+                    .setUsername(rs.getString("username"))
+                    .setPassword(rs.getString("password"))
+                    .setCustomer(rs.getBoolean("isCustomer"))
+                    .setTranslator(rs.getBoolean("isTranslator"));
+        } catch (SQLException sqlException) {
+            return null;
+        }
+    }
+
     public int getId() {
         return id;
     }
@@ -67,19 +80,6 @@ public class User {
         return this;
     }
 
-
-    public static User ResultSetToUser(ResultSet rs) {
-        try {
-            return new User()
-                    .setId(rs.getInt("id"))
-                    .setUsername(rs.getString("username"))
-                    .setPassword(rs.getString("password"))
-                    .setCustomer(rs.getBoolean("isCustomer"))
-                    .setTranslator(rs.getBoolean("isTranslator"));
-        } catch (SQLException sqlException) {
-            return null;
-        }
-    }
 
     @Override
     public String toString() {

@@ -3,6 +3,7 @@ package org.example.model;
 import org.example.config.DBConnection;
 import org.example.entity.Job;
 import org.example.entity.User;
+import org.example.utils.Utils;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -90,17 +91,18 @@ public class UserModel {
         }
     }
 
-    public Job addUserJob(User user, Job job) {
+    public Job addUserJob(User user, String textToTranslate, int price, int owner) {
         String sql = "insert into Jobs (textToTranslate, price," +
-                "owner, issuedAt) values (?, ?, ?, ?, ?)";
+                "owner, issuedAt) values (?, ?, ?, ?)";
         PreparedStatement statement;
+        System.out.println();
 
         try {
             statement = dbConnection.prepareStatement(sql);
-            statement.setString(1, job.getTextToTranslate());
-            statement.setInt(2, job.getPrice());
-            statement.setInt(3, job.getIssuedByUser());
-            statement.setString(4, LocalDate.now().toString());
+            statement.setString(1, textToTranslate);
+            statement.setInt(2, price);
+            statement.setInt(3, owner);
+            statement.setString(4, LocalDate.now().format(Utils.dateTimeFormatter));
 
             int i = statement.executeUpdate();
             if (i != 1) {
@@ -109,7 +111,7 @@ public class UserModel {
             }
 
         } catch (SQLException e) {
-            System.out.println("Error: inserting a new job failed.");
+            System.out.println("Error: inserting a new job failed." + e.getLocalizedMessage());
             return null;
         }
         return null;

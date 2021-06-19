@@ -43,11 +43,6 @@ public class LoginScreenView implements Initializable {
         }
     }
 
-    private void setBindings() {
-        userModelView.usernameProperty().bind(usernameField.textProperty());
-        userModelView.passwordProperty().bind(passwordField.textProperty());
-        loginTitle.textProperty().setValue(userModelView.isTranslator() ? "Translator Login" : "Customer Login");
-    }
 
     @FXML
     private void onRegisterButtonClicked(ActionEvent e) {
@@ -58,10 +53,16 @@ public class LoginScreenView implements Initializable {
         }
     }
 
+    private void setBindings() {
+        userModelView.usernameProperty().bind(usernameField.textProperty());
+        userModelView.passwordProperty().bind(passwordField.textProperty());
+        loginTitle.textProperty().setValue(userModelView.isTranslator() ? "Translator Login" : "Customer Login");
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         userModelView = UserModelView.getInstance();
         setBindings();
     }
+
 }

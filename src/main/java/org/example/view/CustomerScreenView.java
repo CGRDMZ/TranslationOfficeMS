@@ -1,18 +1,35 @@
 package org.example.view;
 
+import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.fxml.Initializable;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
+import javafx.util.converter.CurrencyStringConverter;
+import javafx.util.converter.NumberStringConverter;
+import org.example.entity.Job;
 import org.example.utils.Utils;
+import org.example.viewmodel.CustomerModelView;
+import org.example.viewmodel.UserModelView;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
-public class CustomerScreenView {
+public class CustomerScreenView implements Initializable {
+
+    @FXML
+    public TableView<Job> usersPendingJobsListView;
+    @FXML
+    public TableColumn<Job, Integer> itemName;
+    @FXML
+    public TableColumn<Job, Boolean> itemStatus;
+    @FXML
+    public TableColumn<Job, String> itemAssignedTo;
 
     @FXML
     private TextArea inputText;
@@ -33,12 +50,13 @@ public class CustomerScreenView {
     @FXML
     private TextField filePath;
 
+    private CustomerModelView customerModelView;
+
     @FXML
     private void onCreateJobButtonClicked(ActionEvent event) {
         System.out.println();
         if(!inputText.getText().trim().equals("")){
-            // use txt
-            return;
+            customerModelView.createJob();
         }
         else{
             Utils.showErrorMessage("Please enter a text or select a text file to create a job.");
@@ -53,7 +71,6 @@ public class CustomerScreenView {
         fc.getExtensionFilters().addAll(new ExtensionFilter("Text Documents", "*.txt"));
         File selectedFile = fc.showOpenDialog(null);
 
-
         if (selectedFile == null) {
             Utils.showErrorMessage("Invalid File");
             return;
@@ -62,10 +79,45 @@ public class CustomerScreenView {
         String path = selectedFile.getAbsolutePath();
         String fileName = selectedFile.getName();
 
-
         filePath.setText(path);
 
-        return;
+        // set the text area the content of the file.
+        try {
+            inputText.textProperty().setValue(Utils.fileToString(selectedFile));
+            System.out.println(Utils.fileToString(selectedFile));
+        } catch (FileNotFoundException e) {
+            Utils.showErrorMessage("Error: file not found.");
+        }
+
+    }
+
+    private void setBindings() {
+        inputText.textProperty().bindBidirectional(customerModelView.inputTextProperty());
+        inputText.textProperty().addListener(((observableValue, oldV, newV) -> {
+            wordCount.textProperty().setValue(String.valueOf(newV.split(" ").length));
+        }));
+
+        wordCount.textProperty().bindBidirectional(customerModelView.wordCountProperty(), new NumberStringConverter());
+        textPrice.textProperty().bindBidirectional(customerModelView.textPriceProperty(), new CurrencyStringConverter());
+        textDeadline.textProperty().bindBidirectional(customerModelView.textDeadlineProperty());
+        selectedItemPrice.textProperty().bindBidirectional(customerModelView.selectedItemPriceProperty(), new NumberStringConverter());
+        selectedItemDeadline.textProperty().bindBidirectional(customerModelView.selectedItemDeadlineProperty());
+        filePath.textProperty().bindBidirectional(customerModelView.filePathProperty());
+    }
+
+    private void setTable() {
+        itemName.setCellValueFactory(new PropertyValueFactory<Job, Integer>("id"));
+        itemStatus.setCellValueFactory(new PropertyValueFactory<Job, Boolean>("translationCompleted"));
+        itemAssignedTo.setCellValueFactory(new PropertyValueFactory<Job, String>("assignedTo"));
+
+        usersPendingJobsListView.itemsProperty().setValue(customerModelView.getCustomersPendingJobsList());
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        customerModelView = CustomerModelView.getInstance();
+        setBindings();
+        setTable();
     }
 
 

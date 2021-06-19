@@ -2,19 +2,15 @@ package org.example.view;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
-import org.example.App;
-import org.example.Utils;
-import org.example.entity.User;
-import org.example.model.UserModel;
+import org.example.utils.Utils;
 
-import java.io.IOException;
 import java.io.File;
-import java.net.URL;
-import java.util.ResourceBundle;
 
 public class CustomerScreenView {
 
@@ -39,7 +35,8 @@ public class CustomerScreenView {
 
     @FXML
     private void onCreateJobButtonClicked(ActionEvent event) {
-        if(inputText.getText() != null){
+        System.out.println();
+        if(!inputText.getText().trim().equals("")){
             // use txt
             return;
         }
@@ -56,21 +53,17 @@ public class CustomerScreenView {
         fc.getExtensionFilters().addAll(new ExtensionFilter("Text Documents", "*.txt"));
         File selectedFile = fc.showOpenDialog(null);
 
-        // ÇAĞRII BURAYI OKU:: Dosyanın adı ve konumunu tuttum burada ama işe yara mı bilmiyorum.
-        // Belki database'de projelerin ismiyle tutarız dedim.
+
+        if (selectedFile == null) {
+            Utils.showErrorMessage("Invalid File");
+            return;
+        }
 
         String path = selectedFile.getAbsolutePath();
         String fileName = selectedFile.getName();
 
-        // If a file has been selected
-        if(selectedFile !=null){
 
-            // Gets path of the selected file and shows it to user
-            filePath.setText(selectedFile.getAbsolutePath());
-        }
-        else{
-            Utils.showErrorMessage("Invalid File");
-        }
+        filePath.setText(path);
 
         return;
     }

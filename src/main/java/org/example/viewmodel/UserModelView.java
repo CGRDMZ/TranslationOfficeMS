@@ -6,6 +6,8 @@ import javafx.beans.property.SimpleStringProperty;
 import org.example.entity.User;
 import org.example.model.UserModel;
 
+import java.sql.SQLException;
+
 public class UserModelView {
     private static UserModelView SINGLETON;
     private final SimpleStringProperty username;
@@ -31,11 +33,22 @@ public class UserModelView {
     }
 
     public boolean register() {
-        return userModel.register(username.get(), password.get(), !isTranslator.get(), isTranslator.get());
+        try {
+            return userModel.register(username.get(), password.get(), !isTranslator.get(), isTranslator.get());
+        } catch (SQLException sqlException) {
+            sqlException.printStackTrace();
+            return false;
+        }
     }
 
     public boolean login() {
-        User user = userModel.login(username.get(), password.get());
+        User user = null;
+        try {
+            user = userModel.login(username.get(), password.get());
+        } catch (SQLException sqlException) {
+            sqlException.printStackTrace();
+            return false;
+        }
         if (user != null) {
             this.user.setValue(user);
             return true;

@@ -1,19 +1,19 @@
 package org.example.viewmodel;
 
-import javafx.beans.Observable;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import org.example.entity.Job;
 import org.example.entity.User;
 import org.example.model.UserModel;
 import org.example.utils.Utils;
 
+import java.sql.SQLException;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
+import java.time.ZoneId;
+import java.util.Date;
 
 public class CustomerModelView {
     private static CustomerModelView SINGLETON;
@@ -43,7 +43,6 @@ public class CustomerModelView {
         selectedItemDeadline = new SimpleStringProperty("D/M/YYYY");
         filePath = new SimpleStringProperty();
         user = UserModelView.getInstance().getUser();
-        customersPendingJobsList = FXCollections.observableList(userModel.getCustomerJobs(user));
 
         textPrice.bind(wordCount.multiply(0.05));
         wordCount.addListener(((observableValue, oldV, newV) -> textDeadline.setValue(LocalDate.now().plusDays(Math.floorDiv(wordCount.get(), 500)).format(Utils.dateTimeFormatter))));
@@ -56,8 +55,11 @@ public class CustomerModelView {
         return SINGLETON;
     }
 
-    public void createJob() {
-        userModel.addUserJob(user, inputText.get(),textPrice.get(),user.getId());
+    public boolean createJob() throws SQLException {
+        return userModel
+                .addCustomerJob(user.getId(), inputText.get(), textPrice.get(),
+                        Date.from(LocalDate.parse(textDeadline.get(), Utils.dateTimeFormatter).atStartOfDay(ZoneId.systemDefault()).toInstant()),
+                        Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant())) != null;
     }
 
     public String getInputText() {

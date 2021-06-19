@@ -1,39 +1,54 @@
 package org.example.entity;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
+import com.j256.ormlite.field.DataType;
+import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.table.DatabaseTable;
 
+import java.util.Date;
+
+@DatabaseTable(tableName = "Jobs")
 public class Job {
+    @DatabaseField(generatedId = true)
     private int id;
+    @DatabaseField(canBeNull = false)
     private String textToTranslate;
+    @DatabaseField()
     private String translatedText;
+    @DatabaseField()
     private String translatedFromLanguage;
+    @DatabaseField()
     private String translatedToLanguage;
+    @DatabaseField()
     private boolean translationCompleted;
+    @DatabaseField(canBeNull = false)
     private int price;
-    private String issuedAt;
-    private String approximatedDeadline;
-    private int issuedByUser;
-    private int assignedTo;
+    @DatabaseField(dataType = DataType.DATE)
+    private Date issuedAt;
+    @DatabaseField(dataType = DataType.DATE)
+    private Date approximatedDeadline;
+    @DatabaseField(foreign = true, foreignAutoRefresh = true, foreignAutoCreate = true)
+    private User issuedByUser;
+    @DatabaseField(foreign = true, foreignAutoRefresh = true, foreignAutoCreate = true)
+    private User assignedTo;
 
-
-    public static List<Job> ResultSetToJobList(ResultSet rs) throws SQLException {
-        List<Job> jobList = new ArrayList<>();
-
-        while (rs.next()) {
-            Job job = new Job()
-                    .setId(rs.getInt("id"))
-                    .setTextToTranslate(rs.getString("textToTranslate"))
-                    .setAssignedTo(rs.getInt("assignedTo"))
-                    .setIssuedByUser(rs.getInt("owner"))
-                    .setIssuedAt(rs.getString("issuedAt"));
-            System.out.println(job + "yep");
-            jobList.add(job);
-        }
-        return jobList;
+    public Job() {
     }
+
+//    public static List<Job> ResultSetToJobList(ResultSet rs) throws SQLException {
+//        List<Job> jobList = new ArrayList<>();
+//
+//        while (rs.next()) {
+//            Job job = new Job()
+//                    .setId(rs.getInt("id"))
+//                    .setTextToTranslate(rs.getString("textToTranslate"))
+//                    .setAssignedTo(rs.getInt("assignedTo"))
+//                    .setIssuedByUser(rs.getInt("owner"))
+//                    .setIssuedAt(rs.getString("issuedAt"));
+//            System.out.println(job + "yep");
+//            jobList.add(job);
+//        }
+//        return jobList;
+//    }
 
     public int getId() {
         return id;
@@ -59,6 +74,24 @@ public class Job {
 
     public Job setTranslatedText(String translatedText) {
         this.translatedText = translatedText;
+        return this;
+    }
+
+    public User getIssuedByUser() {
+        return issuedByUser;
+    }
+
+    public Job setIssuedByUser(User issuedByUser) {
+        this.issuedByUser = issuedByUser;
+        return this;
+    }
+
+    public User getAssignedTo() {
+        return assignedTo;
+    }
+
+    public Job setAssignedTo(User assignedTo) {
+        this.assignedTo = assignedTo;
         return this;
     }
 
@@ -98,41 +131,24 @@ public class Job {
         return this;
     }
 
-    public String getIssuedAt() {
+    public Date getIssuedAt() {
         return issuedAt;
     }
 
-    public Job setIssuedAt(String issuedAt) {
+    public Job setIssuedAt(Date issuedAt) {
         this.issuedAt = issuedAt;
         return this;
     }
 
-    public String getApproximatedDeadline() {
+    public Date getApproximatedDeadline() {
         return approximatedDeadline;
     }
 
-    public Job setApproximatedDeadline(String approximatedDeadline) {
+    public Job setApproximatedDeadline(Date approximatedDeadline) {
         this.approximatedDeadline = approximatedDeadline;
         return this;
     }
 
-    public int getIssuedByUser() {
-        return issuedByUser;
-    }
-
-    public Job setIssuedByUser(int issuedByUser) {
-        this.issuedByUser = issuedByUser;
-        return this;
-    }
-
-    public int getAssignedTo() {
-        return assignedTo;
-    }
-
-    public Job setAssignedTo(int assignedTo) {
-        this.assignedTo = assignedTo;
-        return this;
-    }
 
     @Override
     public String toString() {

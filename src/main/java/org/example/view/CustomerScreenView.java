@@ -10,6 +10,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.util.converter.CurrencyStringConverter;
 import javafx.util.converter.NumberStringConverter;
+import jdk.jshell.execution.Util;
 import org.example.entity.Job;
 import org.example.utils.Utils;
 import org.example.viewmodel.CustomerModelView;
@@ -18,6 +19,7 @@ import org.example.viewmodel.UserModelView;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class CustomerScreenView implements Initializable {
@@ -56,7 +58,12 @@ public class CustomerScreenView implements Initializable {
     private void onCreateJobButtonClicked(ActionEvent event) {
         System.out.println();
         if(!inputText.getText().trim().equals("")){
-            customerModelView.createJob();
+            try {
+                customerModelView.createJob();
+            } catch (SQLException sqlException) {
+                sqlException.printStackTrace();
+                Utils.showErrorMessage("Error: while creating the job.");
+            }
         }
         else{
             Utils.showErrorMessage("Please enter a text or select a text file to create a job.");

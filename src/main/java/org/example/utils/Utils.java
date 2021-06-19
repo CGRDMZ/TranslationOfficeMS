@@ -11,7 +11,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.stream.Collectors;
 
 public class Utils {
-    public static DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd/MM/YYYY");
+    public static DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
     public static void showErrorMessage(String message) {
         Alert alert = new Alert(Alert.AlertType.ERROR, message, ButtonType.OK);
         alert.show();

@@ -1,12 +1,10 @@
 package org.example.entity;
 
+import com.j256.ormlite.field.DataType;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Date;
 
 @DatabaseTable(tableName = "Jobs")
 public class Job {
@@ -24,10 +22,10 @@ public class Job {
     private boolean translationCompleted;
     @DatabaseField(canBeNull = false)
     private int price;
-    @DatabaseField()
-    private String issuedAt;
-    @DatabaseField()
-    private String approximatedDeadline;
+    @DatabaseField(dataType = DataType.DATE)
+    private Date issuedAt;
+    @DatabaseField(dataType = DataType.DATE)
+    private Date approximatedDeadline;
     @DatabaseField(foreign = true, foreignAutoRefresh = true, foreignAutoCreate = true)
     private User issuedByUser;
     @DatabaseField(foreign = true, foreignAutoRefresh = true, foreignAutoCreate = true)
@@ -79,6 +77,24 @@ public class Job {
         return this;
     }
 
+    public User getIssuedByUser() {
+        return issuedByUser;
+    }
+
+    public Job setIssuedByUser(User issuedByUser) {
+        this.issuedByUser = issuedByUser;
+        return this;
+    }
+
+    public User getAssignedTo() {
+        return assignedTo;
+    }
+
+    public Job setAssignedTo(User assignedTo) {
+        this.assignedTo = assignedTo;
+        return this;
+    }
+
     public String getTranslatedFromLanguage() {
         return translatedFromLanguage;
     }
@@ -115,20 +131,20 @@ public class Job {
         return this;
     }
 
-    public String getIssuedAt() {
+    public Date getIssuedAt() {
         return issuedAt;
     }
 
-    public Job setIssuedAt(String issuedAt) {
+    public Job setIssuedAt(Date issuedAt) {
         this.issuedAt = issuedAt;
         return this;
     }
 
-    public String getApproximatedDeadline() {
+    public Date getApproximatedDeadline() {
         return approximatedDeadline;
     }
 
-    public Job setApproximatedDeadline(String approximatedDeadline) {
+    public Job setApproximatedDeadline(Date approximatedDeadline) {
         this.approximatedDeadline = approximatedDeadline;
         return this;
     }

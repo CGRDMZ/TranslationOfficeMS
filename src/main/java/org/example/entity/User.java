@@ -3,12 +3,14 @@ package org.example.entity;
 import com.j256.ormlite.dao.ForeignCollection;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.field.ForeignCollectionField;
+import com.j256.ormlite.table.DatabaseTable;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.List;
 
+@DatabaseTable(tableName = "User")
 public class User {
     @DatabaseField(generatedId = true)
     private int id;
@@ -23,18 +25,6 @@ public class User {
     @ForeignCollectionField()
     private ForeignCollection<Job> jobs;
 
-    public static User ResultSetToUser(ResultSet rs) {
-        try {
-            return new User()
-                    .setId(rs.getInt("id"))
-                    .setUsername(rs.getString("username"))
-                    .setPassword(rs.getString("password"))
-                    .setCustomer(rs.getBoolean("isCustomer"))
-                    .setTranslator(rs.getBoolean("isTranslator"));
-        } catch (SQLException sqlException) {
-            return null;
-        }
-    }
 
     public int getId() {
         return id;

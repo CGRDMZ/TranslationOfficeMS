@@ -34,7 +34,7 @@ public class LoginScreenView implements Initializable {
         if (userModelView.login()) {
             Utils.showInfoMessage("login succesfull.");
             if (userModelView.isTranslator()) {
-                Utils.showInfoMessage("navigating to translator screen...");
+                App.setRoot("translator_screen");
             } else {
                 App.setRoot("customer_screen");
             }

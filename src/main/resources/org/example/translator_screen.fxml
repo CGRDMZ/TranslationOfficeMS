@@ -5,9 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="399.0"
-            prefWidth="800.0" stylesheets="@stylesheets/main_styles.css" xmlns="http://javafx.com/javafx/11.0.1"
-            xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.view.TranslatorScreenView">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="399.0" prefWidth="800.0" stylesheets="@stylesheets/main_styles.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.view.TranslatorScreenView">
    <children>
       <BorderPane layoutY="-1.0" prefHeight="400.0" prefWidth="800.0" stylesheets="@stylesheets/main_styles.css">
          <left>
@@ -29,6 +27,9 @@
                         <TableColumn fx:id="translatorJobListAssignedTo" prefWidth="53.0" text="Assigned To" />
                         <TableColumn fx:id="translatorJobListStatus" prefWidth="43.0" text="Status" />
                      </columns>
+                     <columnResizePolicy>
+                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                     </columnResizePolicy>
                   </TableView>
                   <GridPane prefHeight="103.0" prefWidth="176.0" styleClass="job_detail" stylesheets="@stylesheets/main_styles.css">
                     <columnConstraints>
@@ -50,12 +51,15 @@
                <children>
                   <TableView fx:id="translatorJobDetails" prefHeight="307.0" prefWidth="609.0">
                      <columns>
-                        <TableColumn fx:id="translatorJobDetailsID" prefWidth="76.0" text="Job Id" />
-                        <TableColumn fx:id="translatorJobDetailsPrice" prefWidth="71.0" text="Price" />
-                        <TableColumn fx:id="translatorJobDetailsCustomer" prefWidth="93.0" text="Customer" />
-                        <TableColumn fx:id="translatorJobDetailsDeadline" prefWidth="123.0" text="Estimated Deadline" />
-                        <TableColumn fx:id="translatorJobDetailsText" prefWidth="248.0" text="Text" />
+                        <TableColumn fx:id="translatorJobDetailsID" editable="false" prefWidth="76.0" text="Job Id" />
+                        <TableColumn fx:id="translatorJobDetailsPrice" editable="false" prefWidth="71.0" text="Price" />
+                        <TableColumn fx:id="translatorJobDetailsCustomer" editable="false" prefWidth="93.0" text="Customer" />
+                        <TableColumn fx:id="translatorJobDetailsDeadline" editable="false" prefWidth="123.0" text="Estimated Deadline" />
+                        <TableColumn fx:id="translatorJobDetailsText" editable="false" prefWidth="248.0" text="Text" />
                      </columns>
+                     <columnResizePolicy>
+                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                     </columnResizePolicy>
                   </TableView>
                   <HBox prefHeight="102.0" prefWidth="624.0">
                      <children>

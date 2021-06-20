@@ -2,6 +2,10 @@ Text {
     -fx-font-family: 'Lato';
 }
 
+.refresh_btn {
+    -fx-background-color: "#FF0000";
+}
+
 .login_background {
     -fx-background-color: "#617680";
 }

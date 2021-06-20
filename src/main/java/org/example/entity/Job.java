@@ -34,21 +34,6 @@ public class Job {
     public Job() {
     }
 
-//    public static List<Job> ResultSetToJobList(ResultSet rs) throws SQLException {
-//        List<Job> jobList = new ArrayList<>();
-//
-//        while (rs.next()) {
-//            Job job = new Job()
-//                    .setId(rs.getInt("id"))
-//                    .setTextToTranslate(rs.getString("textToTranslate"))
-//                    .setAssignedTo(rs.getInt("assignedTo"))
-//                    .setIssuedByUser(rs.getInt("owner"))
-//                    .setIssuedAt(rs.getString("issuedAt"));
-//            System.out.println(job + "yep");
-//            jobList.add(job);
-//        }
-//        return jobList;
-//    }
 
     public int getId() {
         return id;

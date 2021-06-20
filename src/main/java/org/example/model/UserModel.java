@@ -3,6 +3,7 @@ package org.example.model;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.support.ConnectionSource;
+import javafx.collections.ObservableList;
 import org.example.config.DBConnection;
 import org.example.entity.Job;
 import org.example.entity.User;
@@ -12,8 +13,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Logger;
 
 public class UserModel {
 
@@ -84,43 +87,25 @@ public class UserModel {
     public User getUserByUsername(String username) throws SQLException {
         List<User> result = userDao.queryForEq("username", username);
         if (result.size() > 1) {
-            Utils.showInfoMessage("There is a inconsistency in the database. (more than one user with the same name");
+            Utils.showInfoMessage("There is a inconsistency in the database. (more than one user with the same name.");
         }
         return result.size() == 0 ? null : result.get(0);
-//        String sql = "select * from Users where username = ?";
-//        PreparedStatement statement;
-//        try {
-//            statement = dbConnection.prepareStatement(sql);
-//            statement.setString(1, username);
-//            ResultSet result = statement.executeQuery();
-//            User user = User.ResultSetToUser(result);
-//            if (user == null) return null;
-//            return user;
-//
-//        } catch (SQLException sqlException) {
-//            System.out.println("Error: problem while creating user.");
-//            return null;
-//        }
 
     }
 
     public List<Job> getCustomerJobs(User user) {
-//        if (user == null) return null;
-//        String sql = "select * from Jobs where owner = ?";
-//        PreparedStatement statement;
-//
-//        try {
-//            statement = dbConnection.prepareStatement(sql);
-//            statement.setInt(1, user.getId());
-//
-//            ResultSet rs = statement.executeQuery();
-//            return Job.ResultSetToJobList(rs);
-//
-//        } catch (SQLException e) {
-//            System.out.println("Error: getting the jobs failed.");
-//            return null;
-//        }
-        return null;
+        User result = null;
+        try {
+            result = userDao.queryForSameId(user);
+        } catch (SQLException sqlException) {
+            sqlException.printStackTrace();
+        }
+        if (result == null) {
+            System.out.println("Error: user not found.");
+            return null;
+        }
+
+        return new ArrayList<>(result.getCustomerJobs());
     }
 
     public Job addCustomerJob(int userID, String textToTranslate, int price, Date approximateDeadline, Date issuedAt) throws SQLException {
@@ -133,28 +118,6 @@ public class UserModel {
                 .setIssuedAt(issuedAt);
 
         return jobDao.create(newJob) == 1 ? newJob : null;
-//        String sql = "insert into Jobs (textToTranslate, price," +
-//                "owner, issuedAt) values (?, ?, ?, ?)";
-//        PreparedStatement statement;
-//        System.out.println();
-//
-//        try {
-//            statement = dbConnection.prepareStatement(sql);
-//            statement.setString(1, textToTranslate);
-//            statement.setInt(2, price);
-//            statement.setInt(3, owner);
-//            statement.setString(4, LocalDate.now().format(Utils.dateTimeFormatter));
-//
-//            int i = statement.executeUpdate();
-//            if (i != 1) {
-//                System.out.println("Error: Job failed to insert.");
-//                return null;
-//            }
-//
-//        } catch (SQLException e) {
-//            System.out.println("Error: inserting a new job failed." + e.getLocalizedMessage());
-//            return null;
-//        }
     }
 
     public User login(String username, String password) throws SQLException {

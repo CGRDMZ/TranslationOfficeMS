@@ -20,6 +20,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ResourceBundle;
 
 public class CustomerScreenView implements Initializable {
@@ -57,9 +59,10 @@ public class CustomerScreenView implements Initializable {
     @FXML
     private void onCreateJobButtonClicked(ActionEvent event) {
         System.out.println();
-        if(!inputText.getText().trim().equals("")){
+        if(inputText.getText() != null && !inputText.getText().trim().equals("")){
             try {
                 customerModelView.createJob();
+                customerModelView.refreshPendingJobs();
                 customerModelView.clearInput();
                 Utils.showInfoMessage("Job has been created.");
             } catch (SQLException sqlException) {
@@ -109,7 +112,8 @@ public class CustomerScreenView implements Initializable {
         wordCount.textProperty().bindBidirectional(customerModelView.wordCountProperty(), new NumberStringConverter());
         textPrice.textProperty().bindBidirectional(customerModelView.textPriceProperty(), new CurrencyStringConverter());
         textDeadline.textProperty().bindBidirectional(customerModelView.textDeadlineProperty());
-        selectedItemPrice.textProperty().bindBidirectional(customerModelView.selectedItemPriceProperty(), new NumberStringConverter());
+        selectedItemPrice.textProperty()
+                .bindBidirectional(customerModelView.selectedItemPriceProperty(), new NumberStringConverter());
         selectedItemDeadline.textProperty().bindBidirectional(customerModelView.selectedItemDeadlineProperty());
         filePath.textProperty().bindBidirectional(customerModelView.filePathProperty());
     }
@@ -120,6 +124,13 @@ public class CustomerScreenView implements Initializable {
         itemAssignedTo.setCellValueFactory(new PropertyValueFactory<Job, String>("assignedTo"));
 
         usersPendingJobsListView.itemsProperty().setValue(customerModelView.getCustomersPendingJobsList());
+
+        usersPendingJobsListView.getSelectionModel().selectedItemProperty().addListener((obs, oldV, newV) -> {
+            selectedItemPrice.setText(String.valueOf(newV.getPrice()));
+            selectedItemDeadline
+                    .setText(LocalDate.ofInstant(newV.getApproximatedDeadline().toInstant(), ZoneId.systemDefault())
+                    .format(Utils.dateTimeFormatter));
+        });
     }
 
     @Override
@@ -128,6 +139,4 @@ public class CustomerScreenView implements Initializable {
         setBindings();
         setTable();
     }
-
-
 }

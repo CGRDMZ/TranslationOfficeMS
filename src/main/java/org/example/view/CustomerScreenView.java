@@ -60,6 +60,7 @@ public class CustomerScreenView implements Initializable {
         if(!inputText.getText().trim().equals("")){
             try {
                 customerModelView.createJob();
+                customerModelView.refreshPendingJobs();
                 customerModelView.clearInput();
                 Utils.showInfoMessage("Job has been created.");
             } catch (SQLException sqlException) {

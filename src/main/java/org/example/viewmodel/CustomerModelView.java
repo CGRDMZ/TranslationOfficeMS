@@ -4,6 +4,7 @@ import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import org.example.entity.Job;
 import org.example.entity.User;
@@ -43,6 +44,7 @@ public class CustomerModelView {
         selectedItemDeadline = new SimpleStringProperty("D/M/YYYY");
         filePath = new SimpleStringProperty();
         user = UserModelView.getInstance().getUser();
+        customersPendingJobsList = FXCollections.observableList(userModel.getCustomerJobs(user));
 
         textPrice.bind(wordCount.multiply(0.05));
         wordCount.addListener(((observableValue, oldV, newV) -> textDeadline.setValue(LocalDate.now().plusDays(Math.floorDiv(wordCount.get(), 500)).format(Utils.dateTimeFormatter))));
@@ -53,6 +55,10 @@ public class CustomerModelView {
             SINGLETON = new CustomerModelView(new UserModel());
         }
         return SINGLETON;
+    }
+
+    public void refreshPendingJobs() {
+        customersPendingJobsList.setAll(userModel.getCustomerJobs(user));
     }
 
     public boolean createJob() throws SQLException {

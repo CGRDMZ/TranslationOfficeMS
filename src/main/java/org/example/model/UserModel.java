@@ -93,9 +93,14 @@ public class UserModel {
 
     }
 
-    public List<Job> getCustomerJobs(User user) throws SQLException {
+    public List<Job> getCustomerJobs(User user) {
 
-        User result = userDao.queryForSameId(user);
+        User result = null;
+        try {
+            result = userDao.queryForSameId(user);
+        } catch (SQLException sqlException) {
+            sqlException.printStackTrace();
+        }
         if (result == null) {
             System.out.println("Error: user not found.");
             return null;

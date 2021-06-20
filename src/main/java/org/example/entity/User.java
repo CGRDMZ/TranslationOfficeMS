@@ -5,11 +5,6 @@ import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.field.ForeignCollectionField;
 import com.j256.ormlite.table.DatabaseTable;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.Arrays;
-import java.util.List;
-
 @DatabaseTable(tableName = "User")
 public class User {
     @DatabaseField(generatedId = true)
@@ -22,8 +17,10 @@ public class User {
     private boolean isCustomer;
     @DatabaseField()
     private boolean isTranslator;
-    @ForeignCollectionField()
-    private ForeignCollection<Job> jobs;
+    @ForeignCollectionField(foreignFieldName = "issuedByUser")
+    private ForeignCollection<Job> customerJobs;
+    @ForeignCollectionField(foreignFieldName = "assignedTo")
+    private ForeignCollection<Job> translationJobs;
 
 
     public int getId() {
@@ -35,12 +32,21 @@ public class User {
         return this;
     }
 
-    public ForeignCollection<Job> getJobs() {
-        return jobs;
+    public ForeignCollection<Job> getTranslationJobs() {
+        return translationJobs;
     }
 
-    public void setJobs(ForeignCollection<Job> jobs) {
-        this.jobs = jobs;
+    public User setTranslationJobs(ForeignCollection<Job> translationJobs) {
+        this.translationJobs = translationJobs;
+        return this;
+    }
+
+    public ForeignCollection<Job> getCustomerJobs() {
+        return customerJobs;
+    }
+
+    public void setCustomerJobs(ForeignCollection<Job> customerJobs) {
+        this.customerJobs = customerJobs;
     }
 
     public String getUsername() {
@@ -88,7 +94,7 @@ public class User {
                 ", password='" + password + '\'' +
                 ", isCustomer=" + isCustomer +
                 ", isTranslator=" + isTranslator +
-                ", jobs=" + jobs.toString() +
+                ", jobs=" + customerJobs.toString() +
                 '}';
     }
 }

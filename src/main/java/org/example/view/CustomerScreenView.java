@@ -59,7 +59,7 @@ public class CustomerScreenView implements Initializable {
     @FXML
     private void onCreateJobButtonClicked(ActionEvent event) {
         System.out.println();
-        if(!inputText.getText().trim().equals("")){
+        if(inputText.getText() != null && !inputText.getText().trim().equals("")){
             try {
                 customerModelView.createJob();
                 customerModelView.refreshPendingJobs();
@@ -112,7 +112,8 @@ public class CustomerScreenView implements Initializable {
         wordCount.textProperty().bindBidirectional(customerModelView.wordCountProperty(), new NumberStringConverter());
         textPrice.textProperty().bindBidirectional(customerModelView.textPriceProperty(), new CurrencyStringConverter());
         textDeadline.textProperty().bindBidirectional(customerModelView.textDeadlineProperty());
-        selectedItemPrice.textProperty().bindBidirectional(customerModelView.selectedItemPriceProperty(), new NumberStringConverter());
+        selectedItemPrice.textProperty()
+                .bindBidirectional(customerModelView.selectedItemPriceProperty(), new NumberStringConverter());
         selectedItemDeadline.textProperty().bindBidirectional(customerModelView.selectedItemDeadlineProperty());
         filePath.textProperty().bindBidirectional(customerModelView.filePathProperty());
     }
@@ -138,6 +139,4 @@ public class CustomerScreenView implements Initializable {
         setBindings();
         setTable();
     }
-
-
 }

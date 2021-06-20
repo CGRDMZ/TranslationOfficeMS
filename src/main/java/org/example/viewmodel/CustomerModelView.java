@@ -153,4 +153,9 @@ public class CustomerModelView {
     public void setCustomersPendingJobsList(ObservableList<Job> customersPendingJobsList) {
         this.customersPendingJobsList = customersPendingJobsList;
     }
+
+    public void clearInput(){
+        filePath.set("");
+        inputText.set("");
+    }
 }

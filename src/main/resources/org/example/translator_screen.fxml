@@ -1,22 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.layout.StackPane?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="399.0" prefWidth="800.0" stylesheets="@stylesheets/main_styles.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="399.0"
+            prefWidth="800.0" stylesheets="@stylesheets/main_styles.css" xmlns="http://javafx.com/javafx/11.0.1"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.view.TranslatorScreenView">
    <children>
       <BorderPane layoutY="-1.0" prefHeight="400.0" prefWidth="800.0" stylesheets="@stylesheets/main_styles.css">
          <left>
@@ -31,12 +22,12 @@
                         </Text>
                      </children>
                   </StackPane>
-                  <TableView prefHeight="200.0" prefWidth="200.0">
+                  <TableView fx:id="translatorJobList" prefHeight="200.0" prefWidth="200.0">
                      <columns>
-                        <TableColumn prefWidth="40.0" text="Job Id" />
-                        <TableColumn prefWidth="50.0" text="Price" />
-                        <TableColumn prefWidth="53.0" text="Assigned To" />
-                        <TableColumn prefWidth="43.0" text="Status" />
+                        <TableColumn fx:id="translatorJobListID" prefWidth="40.0" text="Job Id" />
+                        <TableColumn fx:id="translatorJobListPrice" prefWidth="50.0" text="Price" />
+                        <TableColumn fx:id="translatorJobListAssignedTo" prefWidth="53.0" text="Assigned To" />
+                        <TableColumn fx:id="translatorJobListStatus" prefWidth="43.0" text="Status" />
                      </columns>
                   </TableView>
                   <GridPane prefHeight="103.0" prefWidth="176.0" styleClass="job_detail" stylesheets="@stylesheets/main_styles.css">
@@ -49,7 +40,7 @@
                     </rowConstraints>
                      <children>
                         <Label prefHeight="17.0" prefWidth="97.0" text="        Wallet:" textAlignment="CENTER" />
-                        <Label prefHeight="17.0" prefWidth="103.0" text="         100$" GridPane.columnIndex="1" />
+                        <Label fx:id="translatorWallet" prefHeight="17.0" prefWidth="103.0" text="         100$" GridPane.columnIndex="1" />
                      </children>
                   </GridPane>
                </children></VBox>
@@ -57,13 +48,13 @@
          <center>
             <VBox prefHeight="420.0" prefWidth="624.0" styleClass="customer_wrapper" BorderPane.alignment="CENTER">
                <children>
-                  <TableView fx:id="myTable" prefHeight="307.0" prefWidth="609.0">
+                  <TableView fx:id="translatorJobDetails" prefHeight="307.0" prefWidth="609.0">
                      <columns>
-                        <TableColumn prefWidth="76.0" text="Job Id" />
-                        <TableColumn prefWidth="71.0" text="Price" />
-                        <TableColumn prefWidth="93.0" text="Customer" />
-                        <TableColumn prefWidth="123.0" text="Estimated Deadline" />
-                        <TableColumn prefWidth="248.0" text="Text" />
+                        <TableColumn fx:id="translatorJobDetailsID" prefWidth="76.0" text="Job Id" />
+                        <TableColumn fx:id="translatorJobDetailsPrice" prefWidth="71.0" text="Price" />
+                        <TableColumn fx:id="translatorJobDetailsCustomer" prefWidth="93.0" text="Customer" />
+                        <TableColumn fx:id="translatorJobDetailsDeadline" prefWidth="123.0" text="Estimated Deadline" />
+                        <TableColumn fx:id="translatorJobDetailsText" prefWidth="248.0" text="Text" />
                      </columns>
                   </TableView>
                   <HBox prefHeight="102.0" prefWidth="624.0">
@@ -80,14 +71,14 @@
                                     <Insets left="15.0" />
                                  </HBox.margin>
                               </VBox>
-                              <Button mnemonicParsing="false" prefHeight="65.0" prefWidth="170.0" stylesheets="@stylesheets/main_styles.css" text="Refresh">
+                              <Button fx:id="refreshButton" mnemonicParsing="false" onAction="#onRefreshButtonClicked" prefHeight="65.0" prefWidth="170.0" stylesheets="@stylesheets/main_styles.css" text="Refresh">
                                  <HBox.margin>
                                     <Insets right="10.0" top="20.0" />
                                  </HBox.margin>
                               </Button>
                            </children>
                         </HBox>
-                        <Button alignment="CENTER" mnemonicParsing="false" prefHeight="65.0" prefWidth="170.0" text="Accept Job">
+                        <Button fx:id="acceptJobButton" alignment="CENTER" mnemonicParsing="false" onAction="#onAcceptJobButtonClicked" prefHeight="65.0" prefWidth="170.0" text="Accept Job">
                            <HBox.margin>
                               <Insets right="20.0" top="20.0" />
                            </HBox.margin>

@@ -2,6 +2,7 @@ package org.example.model;
 
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
+import com.j256.ormlite.stmt.UpdateBuilder;
 import com.j256.ormlite.support.ConnectionSource;
 import javafx.collections.ObservableList;
 import org.example.config.DBConnection;
@@ -64,20 +65,6 @@ public class UserModel {
             sqlException.printStackTrace();
             return false;
         }
-
-//        String sql = "insert into Users (username, password, isCustomer, isTranslator) values (?,?,?,?)";
-//
-//        try {
-//            PreparedStatement statement = dbConnection.prepareStatement(sql);
-//            statement.setString(1, newUser.getUsername());
-//            statement.setString(2, newUser.getPassword());
-//            statement.setBoolean(3, newUser.isCustomer());
-//            statement.setBoolean(4, newUser.isTranslator());
-//            System.out.println(statement.executeUpdate());
-//            return true;
-//        } catch (SQLException e) {
-//            return false;
-//        }
     }
 
     public User getUserById(int id) throws SQLException {
@@ -118,6 +105,35 @@ public class UserModel {
                 .setIssuedAt(issuedAt);
 
         return jobDao.create(newJob) == 1 ? newJob : null;
+    }
+
+    public List<Job> getCurrentAvailableJobs() throws SQLException {
+        return jobDao.queryBuilder()
+                .where()
+                .isNull("assignedTo_id")
+                .and()
+                .not().eq("translationCompleted", true)
+                .query();
+    }
+
+    public List<Job> getTranslatorJobs(User user) {
+        return new ArrayList<>(user.getTranslationJobs());
+    }
+
+
+    public boolean assignJobToTranslator(User user, Job job) throws SQLException {
+        job.setAssignedTo(user);
+        return jobDao.update(job) == 1;
+    }
+
+    public boolean saveTranslation(Job job, String newTranslationText) throws SQLException {
+        job.setTranslatedText(newTranslationText);
+        return jobDao.update(job) == 1;
+    }
+
+    public boolean submitAJob(Job job) throws SQLException {
+        job.setTranslationCompleted(true);
+        return jobDao.update(job) == 1;
     }
 
     public User login(String username, String password) throws SQLException {

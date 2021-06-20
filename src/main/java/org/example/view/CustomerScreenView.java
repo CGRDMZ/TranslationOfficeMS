@@ -20,6 +20,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ResourceBundle;
 
 public class CustomerScreenView implements Initializable {
@@ -121,6 +123,13 @@ public class CustomerScreenView implements Initializable {
         itemAssignedTo.setCellValueFactory(new PropertyValueFactory<Job, String>("assignedTo"));
 
         usersPendingJobsListView.itemsProperty().setValue(customerModelView.getCustomersPendingJobsList());
+
+        usersPendingJobsListView.getSelectionModel().selectedItemProperty().addListener((obs, oldV, newV) -> {
+            selectedItemPrice.setText(String.valueOf(newV.getPrice()));
+            selectedItemDeadline
+                    .setText(LocalDate.ofInstant(newV.getApproximatedDeadline().toInstant(), ZoneId.systemDefault())
+                    .format(Utils.dateTimeFormatter));
+        });
     }
 
     @Override

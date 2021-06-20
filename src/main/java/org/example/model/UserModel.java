@@ -87,14 +87,13 @@ public class UserModel {
     public User getUserByUsername(String username) throws SQLException {
         List<User> result = userDao.queryForEq("username", username);
         if (result.size() > 1) {
-            Utils.showInfoMessage("There is a inconsistency in the database. (more than one user with the same name");
+            Utils.showInfoMessage("There is a inconsistency in the database. (more than one user with the same name.");
         }
         return result.size() == 0 ? null : result.get(0);
 
     }
 
     public List<Job> getCustomerJobs(User user) {
-
         User result = null;
         try {
             result = userDao.queryForSameId(user);
@@ -119,28 +118,6 @@ public class UserModel {
                 .setIssuedAt(issuedAt);
 
         return jobDao.create(newJob) == 1 ? newJob : null;
-//        String sql = "insert into Jobs (textToTranslate, price," +
-//                "owner, issuedAt) values (?, ?, ?, ?)";
-//        PreparedStatement statement;
-//        System.out.println();
-//
-//        try {
-//            statement = dbConnection.prepareStatement(sql);
-//            statement.setString(1, textToTranslate);
-//            statement.setInt(2, price);
-//            statement.setInt(3, owner);
-//            statement.setString(4, LocalDate.now().format(Utils.dateTimeFormatter));
-//
-//            int i = statement.executeUpdate();
-//            if (i != 1) {
-//                System.out.println("Error: Job failed to insert.");
-//                return null;
-//            }
-//
-//        } catch (SQLException e) {
-//            System.out.println("Error: inserting a new job failed." + e.getLocalizedMessage());
-//            return null;
-//        }
     }
 
     public User login(String username, String password) throws SQLException {

@@ -34,7 +34,7 @@ public class TranslatorModelView {
         currentAvailableJobs = FXCollections.observableList(userModel.getCurrentAvailableJobs());
 
         selectedJob.addListener((obs, oldV, newV) -> {
-            System.out.println(newV);
+            if (newV == null) return;
             Job job = userModel.getJobById(newV.getId());
             sourceText.setValue(job.getTextToTranslate());
             translatedText.setValue(job.getTranslatedText());

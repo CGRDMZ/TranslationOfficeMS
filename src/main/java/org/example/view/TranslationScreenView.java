@@ -60,8 +60,10 @@ public class TranslationScreenView implements Initializable {
     }
 
     private void setBindings() {
-        sourceTextArea.textProperty().bindBidirectional(translatorModelView.sourceTextProperty());
-        translatedTextArea.textProperty().bindBidirectional(translatorModelView.translatedTextProperty());
+        if (userModelView.isTranslator()) {
+            sourceTextArea.textProperty().bindBidirectional(translatorModelView.sourceTextProperty());
+            translatedTextArea.textProperty().bindBidirectional(translatorModelView.translatedTextProperty());
+        }
     }
 
     private void setButtons() {

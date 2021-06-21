@@ -1,9 +1,6 @@
 package org.example.viewmodel;
 
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
+import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import org.example.entity.Job;
@@ -26,6 +23,7 @@ public class CustomerModelView {
     private SimpleIntegerProperty selectedItemPrice;
     private SimpleStringProperty selectedItemDeadline;
     private SimpleStringProperty filePath;
+    private SimpleObjectProperty<Job> selectedJob;
     private User user;
 
 
@@ -43,6 +41,7 @@ public class CustomerModelView {
         selectedItemPrice = new SimpleIntegerProperty();
         selectedItemDeadline = new SimpleStringProperty("D/M/YYYY");
         filePath = new SimpleStringProperty();
+        selectedJob = new SimpleObjectProperty<>();
         user = UserModelView.getInstance().getUser();
         customersPendingJobsList = FXCollections.observableList(userModel.getCustomerJobs(user));
 
@@ -66,6 +65,18 @@ public class CustomerModelView {
                 .addCustomerJob(user.getId(), inputText.get(), textPrice.get(),
                         Date.from(LocalDate.parse(textDeadline.get(), Utils.dateTimeFormatter).atStartOfDay(ZoneId.systemDefault()).toInstant()),
                         Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant())) != null;
+    }
+
+    public Job getSelectedJob() {
+        return selectedJob.get();
+    }
+
+    public SimpleObjectProperty<Job> selectedJobProperty() {
+        return selectedJob;
+    }
+
+    public void setSelectedJob(Job selectedJob) {
+        this.selectedJob.set(selectedJob);
     }
 
     public String getInputText() {

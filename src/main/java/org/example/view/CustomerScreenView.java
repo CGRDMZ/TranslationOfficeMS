@@ -19,6 +19,7 @@ import org.example.viewmodel.CustomerModelView;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -102,8 +103,9 @@ public class CustomerScreenView implements Initializable {
     }
 
     @FXML
-    private void onPendingJobsClicked(MouseEvent e) {
+    private void onPendingJobsClicked(MouseEvent e) throws IOException {
         if (e.getClickCount() == 2 && e.getButton().equals(MouseButton.PRIMARY)) {
+            App.setRoot("translation_screen");
         }
     }
 
@@ -142,6 +144,7 @@ public class CustomerScreenView implements Initializable {
 
         usersPendingJobsListView.getSelectionModel().selectedItemProperty().addListener((obs, oldV, newV) -> {
             if (newV == null) return;
+            customerModelView.setSelectedJob(newV);
             selectedItemPrice.setText(String.valueOf(newV.getPrice()));
             selectedItemDeadline
                     .setText(LocalDate.ofInstant(newV.getApproximatedDeadline().toInstant(), ZoneId.systemDefault())

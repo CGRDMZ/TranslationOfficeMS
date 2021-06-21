@@ -6,6 +6,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import org.example.App;
 import org.example.utils.Utils;
+import org.example.viewmodel.CustomerModelView;
 import org.example.viewmodel.TranslatorModelView;
 import org.example.viewmodel.UserModelView;
 
@@ -27,6 +28,7 @@ public class TranslationScreenView implements Initializable {
     @FXML
     private Button saveButton;
 
+    private CustomerModelView customerModelView;
     private TranslatorModelView translatorModelView;
     private UserModelView userModelView;
 
@@ -56,13 +58,20 @@ public class TranslationScreenView implements Initializable {
 
     @FXML
     public void onBackButtonClicked(ActionEvent event) throws IOException {
-        App.setRoot("translator_screen");
+        if (userModelView.isTranslator()) {
+            App.setRoot("translator_screen");
+        } else {
+            App.setRoot("customer_screen");
+        }
     }
 
     private void setBindings() {
         if (userModelView.isTranslator()) {
             sourceTextArea.textProperty().bindBidirectional(translatorModelView.sourceTextProperty());
             translatedTextArea.textProperty().bindBidirectional(translatorModelView.translatedTextProperty());
+        } else {
+            sourceTextArea.textProperty().setValue(customerModelView.getSelectedJob().getTextToTranslate());
+            translatedTextArea.textProperty().setValue(customerModelView.getSelectedJob().getTranslatedText());
         }
     }
 
@@ -78,6 +87,7 @@ public class TranslationScreenView implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         translatorModelView = TranslatorModelView.getInstance();
         userModelView = UserModelView.getInstance();
+        customerModelView = CustomerModelView.getInstance();
         setBindings();
         setButtons();
     }

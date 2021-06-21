@@ -44,6 +44,8 @@ public class Job {
         return this;
     }
 
+
+
     public String getTextToTranslate() {
         return textToTranslate;
     }

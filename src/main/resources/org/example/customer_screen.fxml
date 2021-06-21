@@ -20,7 +20,7 @@
                            </Text>
                        </children>
                    </StackPane>
-                  <TableView fx:id="usersPendingJobsListView" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+                  <TableView fx:id="usersPendingJobsListView" onMouseClicked="#onPendingJobsClicked" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
                      <columns>
                         <TableColumn fx:id="itemName" prefWidth="49.199996173381805" text="Job ID" />
                         <TableColumn fx:id="itemStatus" prefWidth="51.799991607666016" text="Status" />

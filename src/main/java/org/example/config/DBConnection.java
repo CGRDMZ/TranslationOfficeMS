@@ -11,18 +11,6 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class DBConnection {
-    public static Connection connectDB() {
-        try {
-            String uri = "jdbc:sqlite:user.db";
-            JdbcPooledConnectionSource connectionSource = new JdbcPooledConnectionSource(uri);
-            return DriverManager.getConnection(uri);
-        } catch (SQLException e) {
-            System.out.println("Couldn't connect to database.");
-            System.out.println(e.getMessage());
-            return null;
-        }
-    }
-
     public static ConnectionSource getConnectionSource() {
         String uri = "jdbc:sqlite:user.db";
         try {

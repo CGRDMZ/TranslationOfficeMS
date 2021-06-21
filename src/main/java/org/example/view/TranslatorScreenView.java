@@ -89,8 +89,13 @@ public class TranslatorScreenView implements Initializable{
             new SimpleStringProperty(jobUserCellDataFeatures.getValue().getIssuedByUser().getUsername())
         );
         translatorJobDetailsDeadline.setCellValueFactory(new PropertyValueFactory<Job, Date>("approximatedDeadline"));
-        translatorJobDetailsText.setCellValueFactory(jobStringCellDataFeatures ->
-                new SimpleStringProperty(jobStringCellDataFeatures.getValue().getTextToTranslate().substring(0, 28)));
+        translatorJobDetailsText.setCellValueFactory(jobStringCellDataFeatures -> {
+            if (jobStringCellDataFeatures.getValue() == null) return null;
+            if (jobStringCellDataFeatures.getValue().getTextToTranslate() == null) return null;
+            if (jobStringCellDataFeatures.getValue().getTextToTranslate().length() <= 28)
+                return new SimpleStringProperty(jobStringCellDataFeatures.getValue().getTextToTranslate());
+            return new SimpleStringProperty(jobStringCellDataFeatures.getValue().getTextToTranslate().substring(0, 28));
+        });
 
         translatorJobDetails.itemsProperty().setValue(translatorModelView.getCurrentAvailableJobs());
 

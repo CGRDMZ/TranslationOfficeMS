@@ -22,13 +22,12 @@ import java.util.logging.Logger;
 public class UserModel {
 
 
-    private final Connection dbConnection;
     private final ConnectionSource connectionSource;
+
     private Dao<User,Integer> userDao;
     private Dao<Job,Integer> jobDao;
 
     public UserModel() {
-        this.dbConnection = DBConnection.connectDB();
         this.connectionSource = DBConnection.getConnectionSource();
         try {
             userDao = DaoManager.createDao(connectionSource, User.class);

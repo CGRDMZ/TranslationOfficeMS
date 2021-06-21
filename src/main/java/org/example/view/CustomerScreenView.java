@@ -1,20 +1,21 @@
 package org.example.view;
 
-import javafx.beans.binding.Bindings;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.util.converter.CurrencyStringConverter;
 import javafx.util.converter.NumberStringConverter;
-import jdk.jshell.execution.Util;
+import org.example.App;
 import org.example.entity.Job;
 import org.example.utils.Utils;
 import org.example.viewmodel.CustomerModelView;
-import org.example.viewmodel.UserModelView;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -31,14 +32,14 @@ public class CustomerScreenView implements Initializable {
     @FXML
     public TableColumn<Job, Integer> itemName;
     @FXML
-    public TableColumn<Job, Boolean> itemStatus;
+    public TableColumn<Job, String> itemStatus;
     @FXML
     public TableColumn<Job, String> itemAssignedTo;
 
     @FXML
     private TextArea inputText;
     @FXML
-    private  Label wordCount;
+    private Label wordCount;
     @FXML
     private Label textPrice;
     @FXML
@@ -58,8 +59,7 @@ public class CustomerScreenView implements Initializable {
 
     @FXML
     private void onCreateJobButtonClicked(ActionEvent event) {
-        System.out.println();
-        if(inputText.getText() != null && !inputText.getText().trim().equals("")){
+        if (inputText.getText() != null && !inputText.getText().trim().equals("")) {
             try {
                 customerModelView.createJob();
                 customerModelView.refreshPendingJobs();
@@ -69,15 +69,14 @@ public class CustomerScreenView implements Initializable {
                 sqlException.printStackTrace();
                 Utils.showErrorMessage("Error: while creating the job.");
             }
-        }
-        else{
+        } else {
             Utils.showErrorMessage("Please enter a text or select a text file to create a job.");
         }
     }
 
     @FXML
-    private void onPickFileButtonClicked(ActionEvent event){
-        FileChooser fc= new FileChooser();
+    private void onPickFileButtonClicked(ActionEvent event) {
+        FileChooser fc = new FileChooser();
 
         // Text file filter
         fc.getExtensionFilters().addAll(new ExtensionFilter("Text Documents", "*.txt"));
@@ -100,7 +99,12 @@ public class CustomerScreenView implements Initializable {
         } catch (FileNotFoundException e) {
             Utils.showErrorMessage("Error: file not found.");
         }
+    }
 
+    @FXML
+    private void onPendingJobsClicked(MouseEvent e) {
+        if (e.getClickCount() == 2 && e.getButton().equals(MouseButton.PRIMARY)) {
+        }
     }
 
     private void setBindings() {
@@ -120,16 +124,28 @@ public class CustomerScreenView implements Initializable {
 
     private void setTable() {
         itemName.setCellValueFactory(new PropertyValueFactory<Job, Integer>("id"));
-        itemStatus.setCellValueFactory(new PropertyValueFactory<Job, Boolean>("translationCompleted"));
-        itemAssignedTo.setCellValueFactory(new PropertyValueFactory<Job, String>("assignedTo"));
+        itemStatus.setCellValueFactory(jobStringCellDataFeatures -> {
+            if (jobStringCellDataFeatures.getValue().getAssignedTo() == null) {
+                return new SimpleStringProperty("Assigning");
+            }
+            if (jobStringCellDataFeatures.getValue().isTranslationCompleted()) {
+                return new SimpleStringProperty("Done");
+            }
+            return new SimpleStringProperty("Translating");
+        });
+        itemAssignedTo.setCellValueFactory((jobUserCellDataFeatures -> {
+            if (jobUserCellDataFeatures.getValue().getAssignedTo() == null) return new SimpleStringProperty("");
+            return new SimpleStringProperty(jobUserCellDataFeatures.getValue().getAssignedTo().getUsername());
+        }));
 
         usersPendingJobsListView.itemsProperty().setValue(customerModelView.getCustomersPendingJobsList());
 
         usersPendingJobsListView.getSelectionModel().selectedItemProperty().addListener((obs, oldV, newV) -> {
+            if (newV == null) return;
             selectedItemPrice.setText(String.valueOf(newV.getPrice()));
             selectedItemDeadline
                     .setText(LocalDate.ofInstant(newV.getApproximatedDeadline().toInstant(), ZoneId.systemDefault())
-                    .format(Utils.dateTimeFormatter));
+                            .format(Utils.dateTimeFormatter));
         });
     }
 

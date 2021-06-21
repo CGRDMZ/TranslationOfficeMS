@@ -95,6 +95,16 @@ public class UserModel {
         return new ArrayList<>(result.getCustomerJobs());
     }
 
+    public Job getJobById(int id) {
+        try {
+            return jobDao.queryForId(id);
+        } catch (SQLException sqlException) {
+            sqlException.printStackTrace();
+            System.out.println("Error: while getting job with id.");
+            return null;
+        }
+    }
+
     public Job addCustomerJob(int userID, String textToTranslate, int price, Date approximateDeadline, Date issuedAt) throws SQLException {
         User user = getUserById(userID);
         Job newJob = new Job()
@@ -107,13 +117,19 @@ public class UserModel {
         return jobDao.create(newJob) == 1 ? newJob : null;
     }
 
-    public List<Job> getCurrentAvailableJobs() throws SQLException {
-        return jobDao.queryBuilder()
-                .where()
-                .isNull("assignedTo_id")
-                .and()
-                .not().eq("translationCompleted", true)
-                .query();
+    public List<Job> getCurrentAvailableJobs() {
+        try {
+            return jobDao.queryBuilder()
+                    .where()
+                    .isNull("assignedTo_id")
+                    .and()
+                    .not().eq("translationCompleted", true)
+                    .query();
+        } catch (SQLException sqlException) {
+            sqlException.printStackTrace();
+            System.out.println("Error: while getting available Jobs.");
+            return null;
+        }
     }
 
     public List<Job> getTranslatorJobs(User user) {
@@ -122,11 +138,13 @@ public class UserModel {
 
 
     public boolean assignJobToTranslator(User user, Job job) throws SQLException {
+        if (job == null) return false;
         job.setAssignedTo(user);
         return jobDao.update(job) == 1;
     }
 
     public boolean saveTranslation(Job job, String newTranslationText) throws SQLException {
+        if (job.isTranslationCompleted()) return false;
         job.setTranslatedText(newTranslationText);
         return jobDao.update(job) == 1;
     }

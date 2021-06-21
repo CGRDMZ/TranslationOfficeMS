@@ -45,6 +45,8 @@ public class UserModelView {
         User user = null;
         try {
             user = userModel.login(username.get(), password.get());
+            if (isTranslator() && !user.isTranslator()) return false;
+            if (!isTranslator() && !user.isCustomer()) return false;
         } catch (SQLException sqlException) {
             sqlException.printStackTrace();
             return false;

@@ -20,7 +20,7 @@
                         </Text>
                      </children>
                   </StackPane>
-                  <TableView fx:id="translatorJobList" prefHeight="200.0" prefWidth="200.0">
+                  <TableView fx:id="translatorJobList" onMouseClicked="#onPendingJobListClicked" prefHeight="200.0" prefWidth="200.0">
                      <columns>
                         <TableColumn fx:id="translatorJobListID" prefWidth="40.0" text="Job Id" />
                         <TableColumn fx:id="translatorJobListPrice" prefWidth="50.0" text="Price" />
